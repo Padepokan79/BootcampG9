@@ -41,4 +41,18 @@ Contoh:
 5. Nama		: Topan Gunantara
 Nama Panggilan	: Topan
 email		: gunantarat@gmail.com
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
+======================================================================
+
+6. 	Nama : Resi Meliyanti
+	Nama Panggilan: Resi
+	Email : resimeliyanti2@gmail.com
+=======================================================================
+
+7. Nama		: Fauzi Alamsyah
+Nama Panggilan	: Fauzi
+email		: fauzialamsyah77@gmail.com
+=======
 >>>>>>> origin/master
