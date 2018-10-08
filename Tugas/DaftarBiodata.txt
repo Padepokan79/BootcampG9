@@ -7,14 +7,9 @@ Contoh:
 
 ======================================================================
 
-<<<<<<< HEAD
 2. 	Nama : Nispi Abdul Aziz
 	Nama Panggilan: Nispi
 	Email : nispiabdulaziz15@gmail.com
-=======
-2. 	Nama : Muhammad Zada Widiyanto
-	Nama Panggilan: Zada
-	Email : muhammad.zada.w@gmail.com
 
 ======================================================================
 
