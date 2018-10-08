@@ -20,23 +20,11 @@ Contoh:
 	Email 		: Eyun.Kalpas12@gmail.com
 ======================================================================
 
-<<<<<<< HEAD
-5. Nama		: Topan Gunantara
-Nama Panggilan	: Topan
-email		: gunantarat@gmail.com
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
-=======
-
->>>>>>> d13d9e6a3428392ea8cdef93395b425d5efc4d8d
-=======
 5.	Nama		: Topan Gunantara
    	Nama Panggilan	: Topan
    	Email		: gunantarat@gmail.com
 
->>>>>>> 3c7631955ae9f9dceb749c88f9fb3a0726169f69
+
 ======================================================================
 
 6. 	Nama : Resi Meliyanti
@@ -44,23 +32,10 @@ email		: gunantarat@gmail.com
 	Email : resimeliyanti2@gmail.com
 =======================================================================
 
-<<<<<<< HEAD
-7. Nama		: Fauzi Alamsyah
-Nama Panggilan	: Fauzi
-email		: fauzialamsyah77@gmail.com
-<<<<<<< HEAD
-=======
-8. 	Nama : Wawan Setiawan
-	Nama Panggilan: Wawan
-	Email : wawansetia1210@gmail.com
-	  	wawansetia19470@yahoo.com
-=======
-=======
 7.	Nama		: Fauzi Alamsyah
   	Nama Panggilan	: Fauzi
   	Email		: fauzialamsyah77@gmail.com
 
->>>>>>> 3c7631955ae9f9dceb749c88f9fb3a0726169f69
 
 =====================================================================
 
@@ -68,8 +43,6 @@ email		: fauzialamsyah77@gmail.com
 	Nama Panggilan: Zada
 	Email : muhammad.zada.w@gmail.com
 
-<<<<<<< HEAD
->>>>>>> d13d9e6a3428392ea8cdef93395b425d5efc4d8d
 =======
 10. 	Nama : Anissa Luthfi Febrianti
    	Nama Panggilan : Nissa / Sasa
@@ -80,4 +53,9 @@ email		: fauzialamsyah77@gmail.com
 11. 	Nama : Faisal Siswanto
    	Nama Panggilan : Isal/Panjul
    	Email : faisalsiswanto.xak1@gmail.com
->>>>>>> 3c7631955ae9f9dceb749c88f9fb3a0726169f69
+
+======================================================================
+12. 	Nama : Wawan Setiawan
+	Nama Panggilan: Wawan
+	Email : wawansetia1210@gmail.com
+	  	wawansetia19470@yahoo.com
