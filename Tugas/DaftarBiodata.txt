@@ -1,12 +1,25 @@
 Contoh:
 
-1. 	Nama : Hendra YN
-	Nama Panggilan: Hendra
-	Email : ideki1206@gmail.com
-
+1. 	Nama : Erik Sutiawan
+	Nama Panggilan: Erik
+	Email : eriksutiawan97@gmail.com
 
 ======================================================================
 
-2.	Nama : Faisal Siswanto
+2. 	Nama : Muhammad Zada Widiyanto
+	Nama Panggilan: Zada
+	Email : muhammad.zada.w@gmail.com
+
+======================================================================
+
+3. 	Nama : Sahdan Hidayatul Muzaki
+	Nama Panggilan: Sahdan
+	Email : newbie.trainee97@gmail.com
+
+======================================================================
+
+4.	Nama : Faisal Siswanto
 	Nama Panggilan : Isal/Panjul
 	Email : faisalsiswanto.xak1@gmail.com
+
+======================================================================
