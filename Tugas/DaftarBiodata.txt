@@ -4,24 +4,6 @@ Contoh:
 	Nama Panggilan: Erik
 	Email : eriksutiawan97@gmail.com
 
-<<<<<<< HEAD
-2. 	Nama : Muhammad Zada Widiyanto
-	Nama Panggilan: Zada
-	Email : muhammad.zada.w@gmail.com
-
-3. 	Nama : Wawan Setiawan
-	Nama Panggilan: Wawan
-	Email : wawansetia1210@gmail.com
-	  	wawansetia19470@yahoo.com
-
-
-
-
-======================================================================
-
-=======
-
-======================================================================
 
 2. 	Nama : Nispi Abdul Aziz
 	Nama Panggilan: Nispi
@@ -55,4 +37,7 @@ email		: gunantarat@gmail.com
 Nama Panggilan	: Fauzi
 email		: fauzialamsyah77@gmail.com
 =======
->>>>>>> origin/master
+8. 	Nama : Wawan Setiawan
+	Nama Panggilan: Wawan
+	Email : wawansetia1210@gmail.com
+	  	wawansetia19470@yahoo.com
