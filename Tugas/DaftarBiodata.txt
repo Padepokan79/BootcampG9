@@ -20,8 +20,17 @@ Contoh:
 4.	Nama 		: Khoerul Fatih
 	Nama Panggilan 	: Fatih
 	Email 		: Eyun.Kalpas12@gmail.com
+<<<<<<< HEAD
+
+=======
+
+=======================================================================
+5. Nama		: Topan Gunantara
+Nama Panggilan	: Topan
+email		: gunantarat@gmail.com
+>>>>>>> 54f036a35546a33d6d5cd1410c0d790bbd9e36d0
 ======================================================================
 
-5. 	Nama : Resi Meliyanti
+6. 	Nama : Resi Meliyanti
 	Nama Panggilan: Resi
 	Email : resimeliyanti2@gmail.com
