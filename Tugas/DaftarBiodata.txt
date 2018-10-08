@@ -36,8 +36,8 @@ email		: gunantarat@gmail.com
 7. Nama		: Fauzi Alamsyah
 Nama Panggilan	: Fauzi
 email		: fauzialamsyah77@gmail.com
-=======
-8. 	Nama : Wawan Setiawan
-	Nama Panggilan: Wawan
-	Email : wawansetia1210@gmail.com
-	  	wawansetia19470@yahoo.com
+=======================================================================
+8. 	Nama 		: Wawan Setiawan
+	Nama Panggilan	: Wawan
+	Email 		: wawansetia1210@gmail.com
+	  		wawansetia19470@yahoo.com
