@@ -1,0 +1,5 @@
+Mengerjakan execise 1 dan 2
+membuat :
+-excape sequence comment
+- FirstProg
+- Gasoline Receipt
