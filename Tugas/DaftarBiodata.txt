@@ -1,8 +1,3 @@
-Contoh:
-
-1. 	Nama : Hendra YN
-	Nama Panggilan: Hendra
-	Email : ideki1206@gmail.com
-
-
-======================================================================
+Nama		: Topan Gunantara
+Nama Panggilan	: Topan
+email		: gunantarat@gmail.com
