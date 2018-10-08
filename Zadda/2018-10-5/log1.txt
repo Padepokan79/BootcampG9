@@ -1,0 +1,4 @@
+- tambah execise 1 dan 2
+- escape sequence
+- firstProg
+- gasoline
