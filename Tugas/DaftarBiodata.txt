@@ -33,6 +33,7 @@ Contoh:
 6. 	Nama : Resi Meliyanti
 	Nama Panggilan: Resi
 	Email : resimeliyanti2@gmail.com
+<<<<<<< HEAD
 
 =======================================================================
 
@@ -41,3 +42,11 @@ Contoh:
 	Email : faisalsiswanto.xak1@gmail.com
 
 =======================================================================
+=======
+=======================================================================
+
+7. Nama		: Fauzi Alamsyah
+Nama Panggilan	: Fauzi
+email		: fauzialamsyah77@gmail.com
+=======
+>>>>>>> e1925d3b756b52c4fbe7ebf530f204801ba5072d
