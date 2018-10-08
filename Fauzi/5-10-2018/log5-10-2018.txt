@@ -1,0 +1,5 @@
+menambahkan exercise 1 dan 2
+membuat:
+-escape sequence comments
+-FirstProg
+-Gasoline receipt
