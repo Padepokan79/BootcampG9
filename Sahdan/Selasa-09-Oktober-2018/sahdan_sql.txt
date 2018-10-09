@@ -1,0 +1,191 @@
+Exercise 1 movie database:
+1.
+select mov_title, mov_year
+from movie
+
+2.
+select mov_year
+from movie
+where mov_title='American Beauty'
+
+3.
+select mov_title
+from movie
+where mov_year=1999
+
+4.
+select mov_title
+from movie
+where mov_year<1998
+
+5.
+select reviewer.rev_name
+from reviewer
+union select movie.mov_title
+from movie
+
+6.
+select r.rev_name
+from reviewer r, rating rt
+where rt.rev_id = r.rev_id and rt.rev_stars>=7 and r.rev_name is not null
+
+7.
+select mov_title
+from movie
+where mov_id not in
+	(select mov_id 
+	from rating)
+
+8.
+select mov_title
+from movie
+where mov_id=905 or mov_id=907 or mov_id=917
+
+9.
+select mov_title, mov_year
+from movie
+where mov_title LIKE '%Boogie Nights%'
+
+10.
+select act_id
+from actor
+where act_fname='Woody' and act_lname='Allen'
+
+___________________________________________________________________________________
+subquery:
+
+1.
+select *
+from orders
+where salesman_id = 
+	(select salesman_id
+	from salesman
+	where name='Paul Adam')
+
+2.
+select *
+from orders
+where salesman_id = 
+	(select salesman_id
+	from salesman
+	where city='London')
+
+3.
+select *
+from orders
+where salesman_id = 
+	(select salesman_id
+	from orders
+	where customer_id=3007)
+
+4.
+select *
+from orders
+where purch_amt>
+(select AVG(purch_amt)
+from orders
+where ord_date='2012-10-10')
+
+5.
+SELECT commission
+FROM Salesman
+WHERE salesman_id IN
+(SELECT salesman_id
+FROM Customer
+WHERE city = 'Paris')
+
+6.
+SELECT C.*
+FROM Customer C, Orders O
+WHERE O.ord_date = '2012-10-05'
+AND C.customer_id = O.customer_id
+
+7.
+SELECT O.*
+FROM Orders O
+WHERE O.purch_amt >= (
+SELECT AVG(purch_amt)
+FROM Orders P
+WHERE O.customer_id = P.customer_id
+)
+
+8.
+SELECT *
+FROM Orders
+WHERE purch amt < (
+    SELECT MAX(o.purch_amt)
+    FROM Orders o, Customer c
+    WHERE c.city='London'
+    AND c.customer_id = o.customer_id
+)
+
+9.
+SELECT *
+FROM customer
+WHERE EXISTS
+   (SELECT *
+    FROM customer 
+    WHERE city='London');
+
+10.
+SELECT *
+FROM salesman s
+WHERE EXISTS
+(SELECT *
+FROM customer c
+WHERE s.name < c.cust_name)
+
+
+
+___________________________________________________________________________________
+JOINS:
+
+1.
+SELECT s.name, c.cust_name, s.city
+FROM salesman s, customer c
+WHERE s.city = c.city;
+
+2.
+SELECT o.ord_no, o.purch_amt, c.cust_name, c.city
+FROM orders o, customer c
+WHERE o.purch_amt BETWEEN 500 AND 2000
+
+3.
+SELECT s.*, c.*
+FROM customer c
+INNER JOIN salesman s
+ON s.salesman_id = c.salesman_id
+
+4.
+SELECT c.cust_name, c.city, c.grade, s.name, s.city 
+FROM customer c
+LEFT JOIN salesman s
+ON s.salesman_id = c.customer_id
+ORDER BY c.customer_id
+
+5.
+SELECT DISTINCT c.* 
+FROM customer c
+LEFT JOIN salesman s
+ON c.grade < 300
+
+6.
+SELECT s.* 
+FROM salesman s
+JOIN customer c
+ON c.salesman_id = s.salesman_id
+OR c.salesman_id IS NULL
+
+7.
+SELECT DISTINCT c.com_name, c.com_id, pro_price
+FROM company_mast c
+INNER JOIN item_mast i
+ON c.com_id = i.pro_com
+
+8.
+
+
+9.
+
+
+10.
