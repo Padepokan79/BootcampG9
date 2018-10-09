@@ -1,0 +1,270 @@
+BASIC QUERIES
+1. Write a query in SQL to find the name and year of the movies.
+ANSWER:
+select mov_title, mov_year from movie
+====================================================================================================================
+2. Write a query in SQL to find the year when the movie American Beauty released.
+ANSWER:
+select mov_year 
+from movie 
+where mov_title='American Beauty'
+====================================================================================================================
+3. Write a query in SQL to find the movie which was released in the year 1999.
+ANSWER:
+select mov_title 
+from movie 
+where mov_year=1999
+====================================================================================================================
+4. Write a query in SQL to find the movies which was released before 1998.
+ANSWER:
+select mov_title
+from movie 
+where mov_year<1998
+
+====================================================================================================================
+
+5. Write a query in SQL to return the name of all reviewers and name of movies together in a single list.
+ANSWER:
+SELECT a.rev_name
+FROM reviewer
+UNION
+SELECT b.mov_title
+FROM movie
+
+====================================================================================================================
+
+6. Write a query in SQL to find the name of all reviewers who have rated 7 or more stars to their rating.
+ANSWER:
+select a.rev_name 
+from reviewer a,rating 
+where a.rev_id=rating.rev_id and rev_stars>=7
+
+====================================================================================================================
+
+
+7. Write a query in SQL to find the titles of all movies that have no ratings.
+ANSWER:
+select mov_title 
+from movie  
+where mov_id not in (select mov_id from rating)
+
+====================================================================================================================
+
+
+8. Write a query in SQL to find the titles of the movies with ID 905, 907, 917. 
+ANSWER:
+select mov_title 
+from movie  
+where mov_id = 905 or mov_id=907 or mov_id=917
+
+====================================================================================================================
+
+
+9. Write a query in SQL to find the list of all those movies with year which include the words Boogie Nights.
+ANSWER:
+select mov_title,mov_year 
+from movie  
+where mov_title like'%Boogie Nights%'
+
+====================================================================================================================
+
+
+10. Write a query in SQL to find the ID number for the actor whose first name is 'Woody' and the last name is 'Allen'.
+ANSWER:
+select act_id 
+from actor 
+where act_fname ='Woody' and act_lname='Allen'
+====================================================================================================================
+====================================================================================================================
+====================================================================================================================
+
+SUBQUERIES
+1. Write a query in SQL to list all the information of the actors who played a role in the movie 'Annie Hall'.
+ANSWER:
+ select * 
+from actor 
+where act_id in 
+(select act_id 
+from movie_cast 
+where mov_id in 
+(select mov_id 
+from movie 
+where mov_title='Annie Hall'))
+====================================================================================================================
+	
+
+2. Write a query in SQL to find the titles of all movies that have no ratings.
+ANSWER:
+select mov_title 
+from movie  
+where mov_id not in (select mov_id from rating)
+
+====================================================================================================================
+3. Write a query in SQL to find the titles of all movies directed by the director whose first and last name are Woddy Allen.
+ANSWER:
+select * 
+from movie 
+where mov_id in 
+(select mov_id 
+from movie_direction 
+where dir_id in 
+(select dir_id 
+from director 
+where dir_fname='Woody' and dir_lname='Allen'))
+
+====================================================================================================================
+
+4. Write a query in SQL to find the names of all reviewers who have ratings with a NULL value.
+ANSWER:
+select rev_name 
+from reviewer 
+where rev_id in 
+(select rev_id 
+from rating 
+where rev_stars is null)
+
+====================================================================================================================
+
+5. Write a query in SQL to find the titles of all movies directed by James Cameron.
+ANSWER:
+select * 
+from movie 
+where mov_id in 
+(select mov_id 
+from movie_direction 
+where dir_id in 
+(select dir_id 
+from director 
+where dir_fname='James' and dir_lname='Cameron'))
+
+====================================================================================================================
+
+6. Write a query in SQL to list all the movies which released in the country other than UK. 
+ANSWER:
+select * 
+from movie 
+where mov_rel_country != 'UK'
+
+====================================================================================================================
+
+7. Write a query in SQL to return the reviewer name, movie title, and number of stars for those movies which rating is the lowest one.
+ANSWER:
+select a.rev_name,b.mov_title,c.rev_stars 
+from reviewer a,movie b,rating c 
+where a.rev_id=c.rev_id 
+and b.mov_id=c.mov_id 
+and rev_stars = 
+(sele1ct min(rev_stars) 
+from rating)
+
+====================================================================================================================
+
+8. Write a query in SQL to find the names of all reviewers who rated the movie American Beauty.
+ANSWER:
+select rev_name 
+from reviewer 
+where rev_id in 
+(select rev_id 
+from rating 
+where mov_id in 
+(select mov_id 
+from movie 
+where mov_title='American Beauty'))
+
+====================================================================================================================
+
+9. Write a query in SQL to find the titles of all movies which have been reviewed by anybody except by Paul Monks.
+ANSWER:
+select * 
+from movie 
+where mov_id in 
+(select mov_id 
+from rating 
+where rev_id in 
+(select rev_id 
+from reviewer 
+where rev_name != 'Paul Monks'))
+
+====================================================================================================================
+
+10.Write a query in SQL to find all the years which produced at least one movie and that received a rating of more than 3 stars. Show the results in increasing order.
+ANSWER:
+select mov_year 
+from movie 
+where mov_id in 
+(select mov_id 
+from rating 
+where rev_stars > 3) 
+order by mov_year
+
+====================================================================================================================
+====================================================================================================================
+====================================================================================================================
+
+JOIN
+1. Write a query in SQL to find the highest-rated movie, and report its title, year, rating, and releasing country.
+ANSWER:
+select movie.mov_title,movie.mov_year,rating.rev_stars,mov_rel_country 
+from movie inner join rating 
+on movie.mov_id=rating.mov_id 
+and rating.rev_stars=
+(select MAX(rev_stars) from rating)
+
+====================================================================================================================
+
+2. Write a query in SQL to list the first and last names of all the actors who were cast in the movie 'Annie Hall', and the roles they played in that production.
+ANSWER:
+SELECT act_fname,act_lname,role
+FROM actor 
+INNER JOIN movie_cast ON actor.act_id=movie_cast.act_id
+INNER JOIN movie ON movie_cast.mov_id=movie.mov_id 
+AND movie.mov_title='Annie Hall';
+
+====================================================================================================================
+
+3.Write a query in SQL to find the name of movie and director (first and last names) who directed a movie that casted a role for 'Eyes Wide Shut'.
+ANSWER:
+SELECT a.mov_title,b.dir_fname,b.dir_lname 
+from movie_cast z 
+inner join  movie a on z.mov_id=a.mov_id  
+inner join movie_direction c 
+on a.mov_id=c.mov_id 
+inner join director b 
+on b.dir_id=c.dir_id 
+where a.mov_title='Eyes Wide Shut' and z.role is not null
+
+====================================================================================================================
+
+4. Write a query in SQL to find the name of movie and director (first and last names) who directed a movie that casted a role as Sean Maguire.
+ANSWER:
+SELECT a.mov_title,b.dir_fname,b.dir_lname 
+from movie_cast z 
+inner join  movie a 
+on z.mov_id=a.mov_id  
+inner join movie_direction c 
+on a.mov_id=c.mov_id 
+inner join director b 
+on b.dir_id=c.dir_id 
+where z.role='Sean Maguire'
+
+====================================================================================================================
+
+5. Write a query in SQL to list all the movies with year and genres. 
+ANSWER:
+SELECT a.mov_title,a.mov_year,c.gen_title 
+from movie a 
+inner join movie_genres b 
+on a.mov_id = b.mov_id 
+inner join genres c 
+on b.gen_id = c.gen_id
+
+====================================================================================================================
+
+6. Write a query in SQL to list all the movies with year, genres, and name of the director.
+ANSWER:
+SELECT mov_title, mov_year, gen_title, dir_fname, dir_lname
+FROM movie
+NATURAL JOIN movie_genres
+NATURAL JOIN genres
+NATURAL JOIN movie_direction
+NATURAL JOIN director
