@@ -1,0 +1,88 @@
+1. select customers.CustomerID, customers.ContactName, 
+   customers.ContactTitle, customers.City, customers.Country, 
+   Region.RegionDescription from customers 
+   INNER JOIN Region where region.RegionID = customers.Region 
+
+2. select DISTINCT City FROM customers
+
+3. select ContactName from customers 
+   where Region in(select RegionId 
+   from region where  RegionDescription = 'Eastern') 
+
+4. select ContactName from customers 
+   where ContactTitle = 'Owner'
+
+5. select ContactName from customers 
+   where ContactTitle like '%Manager'
+   OR ContactName like 'Manager%'
+
+6. select DISTINCT country, 
+   COUNT(country) from customers 
+   group by country
+
+7. select FirstName, LastName, Salary 
+   from employees where salary 
+   in(select max(salary) 
+   from employees )
+
+8. select FirstName, LastName, Salary 
+   from employees where salary 
+   in(select min(salary) 
+   from employees)
+
+9. SELECT Floor(AVG(Salary)) from employees
+
+10. SELECT Floor(SUM(Salary)) from employees
+
+11. SELECT FirstName, LastName, TerritoryDescription, RegionDescription
+    FROM employees, employeeterritories, territories , region  
+    WHERE employees.EmployeeID = employeeterritories.EmployeeID
+    AND employeeterritories.TerritoryID = territories.TerritoryID 
+    AND territories.RegionID = region.RegionID
+
+12. select DISTINCT products.ProductID, products.ProductName,
+    categories.CategoryName,categories.Description,
+    customers.CompanyName,products.QuantityPerUnit,
+    products.UnitPrice,products.UnitsInStock
+    from products,categories,customers WHERE
+    products.CategoryID=categories.CategoryID
+
+13. select ProductName, UnitPrice from products 
+    where UnitPrice in( select max
+    (UnitPrice) from products)
+
+14. select ProductName, UnitPrice from products 
+    where UnitPrice in (select min
+    (UnitPrice) from products)
+
+15. select CategoryName, SUM(UnitsInStock)
+    from categories, products 
+    where categories.CategoryID=products.CategoryID
+    GROUP BY categories.CategoryID
+
+16. select ProductName from products
+    where Discontinued = 1
+
+17. select ProductName from products
+    where Discontinued = 0 AND
+    UnitsInStock < 1
+
+18. select floor(AVG(UnitPrice)) 
+    from products
+
+19. select ProductName,UnitPrice
+    from products 
+    where UnitPrice <(
+    select floor(AVG(UnitPrice)) 
+    from products)
+
+20. Tampilkan Product yang Stocknya masih diatas 100
+    Jawab : select ProductName, UnitsInStock from products
+            where UnitsInStock > 100
+
+21. Tampilkan Product apa saja yang termasuk kedalam kategori Seafood.
+    Jawab : select products.ProductName, categories.CategoryName 
+            from products, categories 
+            where products.CategoryID in(
+            select categories.CategoryID from categories
+            where categories.CategoryName = 'Seafood')
