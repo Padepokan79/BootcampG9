@@ -197,7 +197,7 @@
 
 29. Carilah Berapa banyak Quantity untuk setiap Product yang terjual di order details.
     ANSWER :
-	SELECT p.ProductName, COUNT(o.Quantity) AS Qty
+	SELECT p.ProductName, SUM(o.Quantity) AS Qty
 	FROM orderdetails o
 	JOIN products p ON p.ProductID = o.ProductID
 	GROUP BY p.ProductName
