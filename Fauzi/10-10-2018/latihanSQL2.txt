@@ -83,8 +83,14 @@ select a.FirstName,a.LastName,b.RegionDescription,c.TerritoryDescription
 ==========================================================================================================================
 12.Tampilkan List Product dengan Lengkap.
 JAWAB:
-select *
-	from products
+select a.productID,a.ProductName,c.CategoryName,c.Description,b.CompanyName,a.QuantityPerUnit,a.UnitPrice,a.UnitsInStock 
+	from categories c 
+		inner join products a 
+		on c.CategoryID=a.CategoryID 
+			inner join suppliers b 
+			on a.SupplierID=b.SupplierID 
+			order by a.ProductID
+
 ==========================================================================================================================
 13.Tampilkan Nama Product dengan harga Terbesar
 JAWAB:
@@ -165,7 +171,14 @@ select ProductName
 ==========================================================================================================================
 23.Buatlah Query untuk menamplilkan List Order
 JAWAB:
-select * from orders
+
+SELECT 	o.OrderID,c.ContactName,e.LastName,o.OrderDate,o.ShipName as Shipper,o.ShipCity,o.ShipCountry 
+	from customers c 
+		inner join orders o 
+		on c.CustomerID=o.CustomerID 
+			inner join employees e 
+			on e.EmployeeID = e.EmployeeID 
+			group by o.OrderID 
 ==========================================================================================================================
 24.Siapakah Customer yang paling banyak membuat order
 JAWAB:
