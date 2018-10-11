@@ -1,0 +1,6 @@
+erik sutiawan
+
+1. Tampilkan data pegawai yang mendapatkan gaji pada 2011-10-01
+2. Tampilkan berapa data pegawai yang beragama islam
+3. Tampilkan data pegawai yang tidak mempunyai istri / suami
+4. Tampilkan rata-rata jumlah anak dari pegawai

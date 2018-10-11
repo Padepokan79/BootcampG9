@@ -1,0 +1,307 @@
+#Latihan Query SQL
+#Nama    : Sahdan Hidayatul Muzaki
+#Tanggal : Rabu, 10-Oktober-2018
+#___________________________________________________________________________________________
+
+#Soal No.1
+#Buatlah Query untuk menampilkan Data Customers: CustomerID, ContactName, ContactTitle, City, Country, RegionDescription
+#Jawab:
+SELECT c.CustomerID, c.ContactName, c.ContactTitle, c.City, c.Country, r.RegionDescription
+FROM customers c
+INNER JOIN region r
+ON c.Region = r.RegionID
+GROUP BY c.CustomerID;
+#___________________________________________________________________________________________
+#Soal No.2
+#Buatlah Query untuk mencari berasal dari negara mana saja customer kita berasal.
+#Jawab:
+SELECT DISTINCT Country AS "Negara Asal"
+FROM customers ORDER BY Country ASC;
+#___________________________________________________________________________________________
+#Soal No.3
+#Buatlah Query untuk mencari Customer yang berada pada Eastern Region.
+#Jawab:
+SELECT *
+FROM customers
+WHERE Region = 1;
+#___________________________________________________________________________________________
+#Soal No.4
+#Buatlah Query untuk mencari Customer yang merupakan Seorang owner dari Sebuah Company.
+#Jawab:
+SELECT *
+FROM customers
+WHERE ContactTitle = 'Owner';
+#___________________________________________________________________________________________
+#Soal No.5
+#Buatlah Query untuk mencari Customer yang merupakan Seorang Manager dari sebuah company.
+#Jawab:
+SELECT *
+FROM customers
+WHERE ContactTitle LIKE '%Manager%';
+#___________________________________________________________________________________________
+#Soal No.6
+#Buatlah Query untuk Mencari banyaknya Customer dari setiap negara.
+#Jawab:
+SELECT Country AS 'Negara', COUNT(Country) AS 'Jumlah Customer'
+FROM customers;
+#___________________________________________________________________________________________
+#Soal No.7
+#Tampilkan employee yang memiliki Gaji Tertinggi.
+#Jawab:
+SELECT *
+FROM employees
+WHERE Salary =
+	(SELECT MAX(Salary) FROM employees);
+#___________________________________________________________________________________________
+#Soal No.8
+#Tampilkan employee yang memiliki Gaji Terendah.
+#Jawab:
+SELECT *
+FROM employees
+WHERE Salary =
+	(SELECT MIN(Salary) FROM employees);
+#___________________________________________________________________________________________
+#Soal No.9
+#Hitung Rata-rata gaji Employee.(Hasil dari rata-rata dibulatkan kebawah).
+#Jawab:
+SELECT FLOOR(AVG(Salary)) AS 'Rata-rata'
+FROM employees;
+
+#___________________________________________________________________________________________
+#Soal No.10
+#Hitung Besar Jumlah Pengeluaran dari Gaji Employee. (Hasil dibulatkan keangkat terdekat).
+#Jawab:
+SELECT *
+FROM employees
+WHERE Salary =
+	(SELECT MAX(Salary) FROM employees)
+#___________________________________________________________________________________________
+#Soal No.11
+#Tampilkan Territori untuk setiap employee, lengkap dengan territory description dan region description nya.
+#Jawab:
+SELECT e.EmployeeID, e.FirstName, e.LastName, t.TerritoryDescription, r.RegionDescription
+FROM employees e
+INNER JOIN employeeterritories et
+	ON e.EmployeeID = et.EmployeeID
+INNER JOIN territories t
+	ON et.TerritoryID = t.TerritoryID
+INNER JOIN region r
+	ON t.RegionID = r.RegionID;
+#Relasi tabel: employees->employee_territories->territories->region
+#___________________________________________________________________________________________
+#Soal No.12
+#Tampilkan List Product dengan Lengkap.
+#Jawab:
+SELECT *
+FROM products;
+#___________________________________________________________________________________________
+#Soal No.13
+#Tampilkan Nama Product dengan harga Terbesar.
+#Jawab:
+SELECT ProductName
+FROM products
+WHERE UnitPrice =
+	(SELECT MAX(UnitPrice) FROM products);
+#___________________________________________________________________________________________
+#Soal No.14
+#Tampilkan Nama Product dengan harga Terkecil.
+#Jawab:
+SELECT ProductName
+FROM products
+WHERE UnitPrice =
+	(SELECT MIN(UnitPrice) FROM products);
+#___________________________________________________________________________________________
+#Soal No.15
+#Tampilkan Banyaknya product untuk setiap kategori.
+#Jawab:
+SELECT c.CategoryID, c.CategoryName, COUNT(*) AS 'Jumlah Produk'
+FROM products p, categories c
+WHERE p.CategoryID = c.CategoryID GROUP BY c.CategoryID ASC;
+#___________________________________________________________________________________________
+#Soal No.16
+#Tampilkan Product yang sudah tidak diproduksi lagi.
+#Jawab:
+SELECT *
+FROM products
+WHERE Discontinued = 1;
+#___________________________________________________________________________________________
+#Soal No.17
+#Tampilkan Product masih diproduksi tapi telah habis stocknya.
+#Jawab:
+SELECT *
+FROM products
+WHERE Discontinued = 0 AND UnitsInStock = 0; 
+#___________________________________________________________________________________________
+#Soal No.18
+#Tampilkan Nama Product dengan harga Terkecil.
+#Jawab:
+SELECT ProductName
+FROM products
+WHERE UnitPrice =
+	(SELECT MIN(UnitPrice) FROM products); 
+#___________________________________________________________________________________________
+#Soal No.19
+#Hitung Rata-rata harga product.(Hasil dibulatkan kebawah)
+#Jawab:
+SELECT FLOOR(AVG(UnitPrice)) AS 'Rata-rata'
+FROM products; 
+#___________________________________________________________________________________________
+#Soal No.20
+#Tampilkan Product yang harganya dibawah rata-rata.
+#Jawab:
+SELECT *
+FROM products
+WHERE UnitPrice <
+	(SELECT AVG(UnitPrice) FROM products); 
+#___________________________________________________________________________________________
+#Soal No.21
+#Tampilkan Product yang Stocknya masih diatas 100.
+#Jawab:
+SELECT *
+FROM products
+WHERE UnitsInStock > 100; 
+#___________________________________________________________________________________________
+#Soal No.22
+#Tampilkan Product apa saja yang termasuk kedalam kategori Seafood.
+#Jawab:
+SELECT *
+FROM products
+WHERE CategoryID = 
+	(SELECT CategoryID
+	FROM categories
+	WHERE CategoryName = 'Seafood'); 
+#___________________________________________________________________________________________
+#Soal No.23
+#Tampilkan Product yang berasal dari Japan dan Singapore.
+#Jawab:
+SELECT *
+FROM products
+WHERE SupplierID IN
+	(SELECT SupplierID
+	FROM suppliers
+	WHERE Country IN ('Japan', 'Singapore')); 
+#___________________________________________________________________________________________
+#Soal No.24
+#Buatlah Query untuk menampilkan List Order.
+#Jawab:
+SELECT orde.OrderID, cus.ContactName, emp.LastName, orde.OrderDate, shp.CompanyName AS 'Shipper', orde.ShipCity, orde.ShipCountry
+FROM orders orde
+INNER JOIN employees emp
+	ON orde.EmployeeID = emp.EmployeeID
+INNER JOIN customers cus
+	ON orde.CustomerID = cus.CustomerID
+INNER JOIN shippers shp
+	ON orde.ShipVia = shp.ShipperID
+GROUP BY orde.OrderID; 
+#Relas tabel: orders->customer, employees, shipper
+#___________________________________________________________________________________________
+#Soal No.25
+#Siapakah Customer yang paling banyak membuat order.
+#Jawab:
+SELECT *
+FROM customers
+WHERE CustomerID =
+	(SELECT CustomerID
+	FROM orders
+	WHERE Freight =
+		(SELECT MAX(Freight)
+		FROM orders) ); 
+#___________________________________________________________________________________________
+#Soal No.26
+#Layanan Shipper apa yang paling sedikit dipakai.
+#Jawab:
+SELECT *
+FROM shippers
+WHERE ShipperID =
+	(SELECT ShipperID
+	FROM orders
+	WHERE Freight =
+		(SELECT MAX(Freight)
+		FROM orders) );
+SELECT MIN(COUNT(ShipVia),3) from orders;
+#___________________________________________________________________________________________
+#Soal No.27
+#Buatlah Query untuk menampilkan Order Details dengan lengkap.
+#Jawab:
+SELECT DISTINCT o.OrderID, p.ProductName, c.CategoryName, p.UnitPrice, p.QuantityPerUnit AS 'Quantity', s.Country AS 'MadeIn'
+FROM orders o
+INNER JOIN `order details` od
+ON o.OrderID = od.OrderID
+INNER JOIN products p
+ON od.ProductID = p.ProductID
+INNER JOIN categories c
+ON p.CategoryID = c.CategoryID
+INNER JOIN suppliers s
+ON p.SupplierID = s.SupplierID
+GROUP BY o.OrderID;
+
+#Relasi tabel: order, order detail, product, category, supplier
+#___________________________________________________________________________________________
+#Soal No.28
+#Carilah Product yang paling banyak di Order.
+#Jawab:
+SELECT ProductName, COUNT(o.ProductID) AS jml_produk
+FROM `order details` o
+NATURAL JOIN products
+GROUP BY o.ProductID
+ORDER BY jml_produk DESC
+LIMIT 1;
+#___________________________________________________________________________________________
+#Soal No.29
+#Carilah Product yang paling sedikit di Order.
+#Jawab:
+SELECT ProductName, COUNT(o.ProductID) AS jml_produk
+FROM `order details` o
+NATURAL JOIN products
+GROUP BY o.ProductID
+ORDER BY jml_produk ASC
+LIMIT 1;
+#___________________________________________________________________________________________
+#Soal No.30
+#Carilah Berapa banyak Quantity untuk setiap Product yang terjual di order details.
+#Jawab:
+SELECT *
+FROM orders
+WHERE OrderID IN 
+	(SELECT OrderID
+	FROM `order details`
+	WHERE Quantity = 
+		(SELECT MAX(Quantity) AS 'Quantity'
+		FROM `order details`) );
+#___________________________________________________________________________________________
+#Soal No.31
+#Carilah Customer yang berasal dari kota yang berakhiran vowels (a,i,u,e,o). Hasil tidak boleh duplikasi.
+#Jawab:
+SELECT DISTINCT *
+FROM customers
+WHERE City LIKE '%a' OR
+City LIKE '%e' OR
+City LIKE '%i' OR
+City LIKE '%o' OR
+City LIKE '%u';
+#___________________________________________________________________________________________
+#Soal No.32
+#Carilah customer yang berasal dari negara yang awalnya bukan dari vowel (a,i,u,e,o), Hasil tidak boleh duplikasi
+#Jawab:
+SELECT DISTINCT *
+FROM customers
+WHERE Country NOT LIKE 'A%' AND
+Country NOT LIKE 'E%' AND
+Country NOT LIKE 'I%' AND
+Country NOT LIKE 'O%' AND
+Country NOT LIKE 'U%'; 
+#___________________________________________________________________________________________
+#Soal No.33
+#Buatlah Query untuk mencari ContactName Customer beserta Title nya. Contoh: Ana Trujillo(Ow)
+#Jawab:
+SELECT ContactName, ContactTitle
+FROM customers
+GROUP BY ContactTitle; 
+#___________________________________________________________________________________________
+#Soal No.34
+#Buatlah Query untuk menampilkan jumlah setiap customer berdasarkan title nya.
+#Jawab:
+SELECT COUNT(*) AS 'Jumlah', ContactTitle
+FROM customers
+GROUP BY ContactTitle; 
+#___________________________________________________________________________________________

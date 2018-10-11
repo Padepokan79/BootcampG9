@@ -1,0 +1,238 @@
+1.Buatlah Query untuk menampilkan Data Customers CustomerIDContactName, ContactTitle, City, Country, RegionDescription
+
+=> 	select c.CustomerID,c.ContactName, c.ContactTitle, c.City, c.Country, r.RegionDescription 
+	from customers c, region r 
+	where c.region=r.regionid 
+	order by c.customerId;
+
+2. Buatlah Query untuk mencari berasal dari negara mana saja customer kita berasal.
+
+=>	select ContactName,country 
+	from customers;
+
+3. Buatlah Query untuk mencari Customer yang berada pada Eastern Region.
+
+=> 	select * 
+	from customers 
+	where region in(
+		select regionid 
+		from region 
+		where regiondescription="Eastern");
+
+4. Buatlah Query untuk mencari Customer yang merupakan Seorang owner dari Sebuah Company
+
+=> 	select * 
+	from customers 
+	where contacttitle='Owner';
+
+5. Buatlah Query untuk mencari Customer yang merupakan Seorang Manager dari sebuah company.
+
+=> 	SELECT * 
+	FROM customers 
+	WHERE contacttitle LIKE '%Manager%';
+
+6. Buatlah Query untuk Mencari banyaknya Customer dari setiap negara.
+
+=>	SELECT country , COUNT(country) 
+	FROM customers GROUP BY country;
+
+7. Tampilkan employee yang memiliki Gaji Tertinggi.
+
+=>	select * 
+	from employees 
+	where salary in (
+		select max(salary) 
+		FROM employees);
+
+8. Tampilkan employee yang memiliki Gaji Terendah.
+
+=>	SELECT * 
+	FROM employees 
+	WHERE salary IN (
+		SELECT MIN(salary) 
+		FROM employees);
+
+9. Hitung Rata-rata gaji Employee.(Hasil dari rata-rata dibulatkan kebawah).
+
+=>	select Floor(avg(salary)) as RataRata_Gaji 
+	from employees;
+
+10. Hitung Besar Jumlah Pengeluaran dari Gaji Employe. (Hasil dibulatkan keangkat terdekat).
+
+=>	SELECT ROUND(SUM(salary)) AS JUmlahGaji 
+	FROM employees;
+
+11. Tampilkan Territori untuk setiap employee, lengkap dengan territori description dan region description nya.
+
+=> 	SELECT e.*,t.territoryDescription,r.regionDescription FROM employees e 
+	INNER JOIN employeeterritories et ON e.employeeID=et.employeeId 
+	INNER JOIN territories t ON t.territoryId=et.territoryId 
+	INNER JOIN region r ON r.regionid=t.regionid;
+
+12. Tampilkan List Product dengan Lengkap.
+
+=> 	SELECT p.productId,p.productName,s.companyName,c.categoryName,c.Description,p.QuantityPerUnit,p.Unitprice,p.UnitsInStock,p.UnitsOnOrder,p.reorderlevel,p.discontinued
+	FROM Suppliers s 
+	INNER JOIN products p ON p.SupplierId=s.SupplierId 
+	INNER JOIN categories c ON c.categoryid=p.categoryid ORDER BY productId;
+
+13. Tampilkan Nama Product dengan harga Terbesar.
+
+=>	SELECT productName,MAX(unitprice) 
+	FROM products;
+
+14. Tampilkan Nama Product dengan harga Terkecil.
+
+=>	SELECT productName,MIN(unitprice) FROM products;
+
+15. Tampilkan Banyaknya product untuk setiap kategori.
+
+=> 	select c.categoryname,sum(p.unitsInStock) 
+	from products p
+	inner join  categories c on c.categoryid=p.categoryid 
+	group by c.categoryname;
+
+16. Tampilkan Product yang sudah tidak diproduksi lagi.
+
+=>	SELECT * 
+	FROM products 
+	WHERE discontinued='1'
+
+17. Tampilkan Product masih diproduksi tapi  telah habis stocknya.
+
+=>	select * 
+	from products 
+	where discontinued='0' and unitsinstock=0;
+
+18. Hitung Rata-rata harga product.(Hasil dibulatkan kebawah)
+
+=>	SELECT FLOOR(AVG(UnitPrice)) FROM products;
+
+19. Tampilkan Product yang harganya dibawah rata-rata.
+
+=> 	select productName,Unitprice 
+	from products 
+	where unitprice < (
+		select avg(unitprice) 
+		from products);
+
+20. Tampilkan Product yang Stocknya masih diatas 100.
+
+=> 	select productname 
+	from products 
+	where unitsinstock>100;
+
+21.Tampilkan Product apa saja yang termasuk kedalam kategori Seafood
+
+=>	select productname 
+	from products 
+	where categoryid in (
+		select categoryId 
+		from categories 
+		where CategoryName='Seafood');
+
+22. Tampilkan Product yang berasal dari Japan dan Singapore.
+
+=>	select productName 
+	from products 
+	where supplierid in (
+		select supplierid 
+		from suppliers 
+		where country='japan' or country='singapora')
+
+23. Buatlah Query untuk menamplilkan List Order.
+
+=> 	SELECT * FROM orders;
+
+24.Siapakah Customer yang paling banyak membuat order.
+
+=>	select c.companyName,count(o.CustomerId) as jumlah 
+	from customers c 
+	inner join orders o on o.customerid=c.customerid 
+	group by o.customerId 
+	order by jumlah desc limit 1; 
+
+
+25. Layanan Shipper apa yang paling sedikit dipakai
+
+=> 	select s.CompanyName, count(o.shipvia)as jum 
+	from shippers s
+	inner join orders o on o.shipvia=s.shipperid 
+	group by o.shipvia order by jum asc limit 1; 
+
+
+26. Buatlah Query untuk menampilkan Order Details dengan lengkap
+
+=>	select o.orderid,p.productName,c.categoryname,p.unitprice,p.unitsinstock as Quantity ,s.country as madeIn from  `order details` o
+	inner join products p on p.productid=o.productid 
+	inner join categories c on c.categoryId=p.categoryid 
+	inner join Suppliers s on s.supplierid=p.supplierId 
+	group BY productName 
+	order by orderid;
+
+27. Carilah Product yang paling banyak di Order.
+
+=>	select a.ProductName,count(o.ProductID) as total 
+	from products a 
+	inner join `order details` o 
+	on a.ProductId=o.productID 
+	group by a.productName 
+	order by total 
+	desc limit 1
+
+
+
+28. Carilah Product yang paling sedikit di Order.
+
+=>	select a.ProductName,count(o.ProductID) as total 
+	from products a 
+	inner join `order details` o 
+	on a.ProductId=o.productID 
+	group by a.productName 
+	order by total 
+	asc limit 1
+	
+29. Carilah Berapa banyak Quantity untuk setiap Product yang terjual di order details.
+
+
+=> 	select productid,count(quantity) 
+	from `order details` 
+	group by productid;
+
+
+30. Carilah Customer yang berasal dari kota yang berakhiran vowels (a,i,u,e,o). Hasil tidak boleh duplikasi.
+
+=> 	select companyName,city 
+	from customers 
+	where city like ('%a')or 
+	city LIKE ('%i')or 
+	city LIKE ('%u')or 
+	city LIKE ('%e')or 
+	city LIKE ('%o');
+
+31. carilah customer yang berasal dari negara yang awalnya bukan dari vowel (a,i,u,e,o), Hasil tidak boleh duplikasi.
+
+=> 	SELECT companyName,country 
+	FROM customers 
+	WHERE NOT(
+		country LIKE ('a%')OR 
+		country LIKE ('i%')OR 
+		country LIKE ('u%')OR 
+		country LIKE ('e%')OR 
+		country LIKE ('o%'));
+
+
+
+32.Buatlah Query untuk mencari ContactName Customer beserta Title nya.
+
+=> 	SELECT CONCAT(contactname,'(',SUBSTRING(contacttitle,1,2),')')AS TotalCustomerByTitle 
+	FROM customers 
+
+
+
+33. Buatlah Query untuk menampilkan jumlah setiap customer berdasarkan title nya.
+
+=> 	select count(customerid), contactTitle 
+	from customers 
+	group by contacttitle 
+	order by count(customerid)

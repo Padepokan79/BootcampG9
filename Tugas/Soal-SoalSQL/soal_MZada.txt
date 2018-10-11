@@ -1,0 +1,5 @@
+##M Zada Widiyanto##
+1. Tampilkan Pegawai yang memiliki gelar depan
+2. Tampilkan Pegawai yang menjadi Kepala Sekolah SD GOL.IV
+3. Tampilkan Pegawai yang menjabat menjadi Gubernur
+4. Tampilkan Pegawai dengan gaji pokok tertinggi

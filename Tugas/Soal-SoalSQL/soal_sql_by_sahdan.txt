@@ -1,0 +1,15 @@
+Nama: Sahdan Hidayatul Muzaki
+
+_____________________________________________________________________________________________
+Soal 1:
+Cari data pegawai yang memiliki gaji pokok diatas rata-rata, tunjangan fungsi diatas 700.000 dan tidak memiliki tunjangan anak.
+_____________________________________________________________________________________________
+Soal 2:
+Tampilkan nama pegawai, total hutang, sisa hutang dan sisa cicilan yang memiliki jumlah hutang <= 500.000, dengan pendidikan Sarjana dan baru mencicil sebanyak 10 kali.
+_____________________________________________________________________________________________
+Soal 3:
+Tampilkan nama pegawai, nama keluarga, jumlah anak, status perkawinan, tanggal lahir dengan daerah Golongan I, dengan Eselon 1A dan beragama Kristen (untuk kondisi menggunakan kata kunci HAVING (bukan WHERE)).
+_____________________________________________________________________________________________
+Soal 4:
+Tampilkan data gaji yang untuk tanggal 01 Maret 2014 sampai 30 Juni 2014 dimana pegawainya belum menikah, huruf pertama dari namanya tidak dimulai oleh huruf vokal dan memiliki pangkat Penata Muda.
+_____________________________________________________________________________________________

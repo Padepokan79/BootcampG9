@@ -1,0 +1,5 @@
+====Nispi Abdul Aziz===
+1. Tampilkan Pegawai dan nama pangkat pegawai tsb. yang berstatus Janda/Duda
+2. Tampilkan pegawai yang bergilar M.si
+3. Tampilkan jumlah cicilan hutang yang berpangkat Pengatur Muda
+4. Tampilkan pegawai yang bertatus janda dan mempunyai anak
