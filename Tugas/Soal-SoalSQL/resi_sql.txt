@@ -1,0 +1,4 @@
+1. Tampilkan Data pegawai yang memiliki anak 2 dan memiliki gaji terbesar 
+2. Tampilkan rata-rata gaji pegawai berdasarkan jabatan
+3. Tampilkan pegawai yang tidak mencantumkan alamat dan lahir tahun 1963
+4.Tampilkan  jumlah hutang seluruh pegawai berdasarkan jenis hutang (dari yang terbesar)

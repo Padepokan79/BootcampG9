@@ -1,0 +1,4 @@
+1.  Carilah data pegawai yang beragama Islam dan pendidikannya SLTA
+2.  Carilah jumlah data pegawai yang Golongan Pangkatnya dibawah 3A
+3.  Carilah pegawai yang mendapatkan tambahan gaji dari Tunjangan Umum
+4.  Carilah jumlah pegawai yang memiliki pangkat Juru Muda

@@ -1,0 +1,276 @@
+1. Buatlah Query untuk menampilkan Data Customers CustomerIDContactName, ContactTitle, City, Country, RegionDescription
+Jwb :SELECT CustomerId, ContactName, ContactTitle, City, Country , RegionDescription 
+         FROM customers,region 
+         WHERE region.RegionId=customers.Region 
+
+2. Buatlah Query untuk mencari berasal dari negara mana saja customer kita berasal.
+Jwb : SELECT Country 
+          FROM customers group by Country
+
+3. Buatlah Query untuk mencari Customer yang berada pada Eastern Region.
+Jwb : SELECT CustomerId, ContactName, ContactTitle, City, Country , RegionDescription 
+         FROM customers,region 
+         WHERE region.RegionId=customers.Region
+         AND RegionDescription='Eastern';
+
+4. Buatlah Query untuk mencari Customer yang merupakan Seorang owner dari Sebuah Company.
+Jwb: SELECT CustomerID 
+         FROM customers 
+         WHERE ContactTitle='Owner';
+
+5. Buatlah Query untuk mencari Customer yang merupakan Seorang Manager dari sebuah company.
+Jwb : SELECT CustomerID , ContactTitle
+         FROM customers 
+         WHERE ContactTitle like '%manager%';
+
+6. Buatlah Query untuk Mencari banyaknya Customer dari setiap negara
+Jwb :SELECT Country, Count(CustomerID) As 'jumlah' 
+         FROM customers 
+         GROUP BY Country;
+
+7.Tampilkan employee yang memiliki Gaji Tertinggi.
+Jwb: SELECT LastName, FirstName, MAX(Salary) as 'Gaji' 
+         FROM employees;
+
+8. Tampilkan employee yang memiliki Gaji Terendah.
+Jwb:SELECT LastName, FirstName, MIN(Salary) as 'Gaji' 
+         FROM employees;
+
+9. Hitung Rata-rata gaji Employee.(Hasil dari rata-rata dibulatkan kebawah).
+Jwb :SELECT concat(LastName,' ', FirstName) as 'Nama Lengkap', 
+         FLOOR(AVG(salary)) as 'Gaji ' 
+         FROM employees
+
+10. Hitung Besar Jumlah Pengeluaran dari Gaji Employe. (Hasil dibulatkan keangkat terdekat).
+Jwb : SELECT concat(LastName,' ', FirstName) as 'Nama Lengkap', 
+          ROUND(SUM(salary)) as 'Gaji ' 
+          FROM employees
+
+11. Tampilkan Territori untuk setiap employee, lengkap dengan territori description dan region description nya
+Jwb :SELECT EmployeeID, TerritoryDescription, RegionDescription 
+         FROM employeeterritories 
+         JOIN territories 
+        ON territories.TerritoryID=employeeterritories.TerritoryID 
+        JOIN region 
+        ON territories.RegionID=region.RegionID 
+        ORDER BY TerritoryDescription;
+
+12. Tampilkan List Product dengan Lengkap.
+Jwb : SELECT ProductID, ProductName, CategoryName, Description, CompanyName, QuantityPerUnit, UnitPrice, UnitsInStock 
+          FROM suppliers JOIN products JOIN  categories
+          ON products.SupplierID=suppliers.SupplierID
+         AND categories.CategoryID=products.CategoryID order by ProductID ASC; 
+
+13. Tampilkan Nama Product dengan harga Terbesar
+Jwb : SELECT ProductName, MAX(UnitPrice) 
+          As 'Harga Terbesar' from products;
+
+14. Tampilkan Nama Product dengan harga Terkecil
+Jwb : SELECT ProductName, MIN(UnitPrice) 
+          As 'Harga Terkecil' from products;
+
+15. Tampilkan Banyaknya product untuk setiap kategori.
+Jwb : SELECT CategoryName, SUM(ProductID) As 'Jumlah Produk' 
+          FROM categories, products 
+          WHERE categories.CategoryID=products.CategoryID group by categories.CategoryID ;
+
+16. Tampilkan Product yang sudah tidak diproduksi lagi.
+Jwb : SELECT ProductName 
+          FROM products
+          WHERE Discontinued=1 
+
+17. -Tampilkan Product masih diproduksi tapi  telah habis stocknya.
+Jwb : SELECT ProductName 
+          FROM products
+          WHERE Discontinued=0
+          AND UnitsInStock=0;
+
+18. Hitung Rata-rata harga product.(Hasil dibulatkan kebawah)
+Jwb : SELECT FLOOR(AVG(UnitPrice)) as 'Rata-Rata Harga ' 
+          FROM products;
+
+19. Tampilkan Product yang harganya dibawah rata-rata.
+Jwb: SELECT ProductName, UnitPrice from products where UnitPrice<(
+          SELECT FLOOR(AVG(UnitPrice))
+          FROM products);
+
+20. Tampilkan Product yang Stocknya masih diatas 100.
+Jwb : SELECT ProductName,UnitsInStock from products 
+          WHERE UnitsInStock>100;
+
+21. Tampilkan Product apa saja yang termasuk kedalam kategori Seafood.
+Jwb: SELECT ProductName, CategoryName
+         FROM products, categories 
+         WHERE categories.CategoryID = products.CategoryID 
+         AND CategoryName='Seafood';
+
+22. Tampilkan Product yang berasal dari Japan dan Singapore.
+Jwb:SELECT ProductName, Country
+        FROM products, suppliers
+        WHERE suppliers.SupplierID=products.SupplierID
+        AND Country='Japan' or Country='Singapore';
+
+23. Buatlah Query untuk menamplilkan List Order.
+Jwb: SELECT OrderID, ContactName, LastName, OrderDate, customers.CompanyName as 'Shipper', ShipCity, ShipCountry
+         FROM shippers JOIN employees JOIN orders JOIN customers
+         ON shippers.ShipperID=orders.ShipVia 
+         AND orders.CustomerID=customers.CustomerID
+         AND orders.EmployeeID=employees.EmployeeID
+          ;
+
+
+24. Siapakah Customer yang paling banyak membuat order.
+Jwb: SELECT CustomerID, COUNT(OrderID) as 'Banyak Order' 
+         FROM orders GROUP BY CustomerID 
+         ORDER BY COUNT(OrderID) DESC LIMIT 1;
+
+25. Layanan Shipper apa yang paling sedikit dipakai.
+Jwb:SELECT CompanyName , COUNT(ShipVia) as 'Banyak Layanan' from orders, shippers
+        WHERE shippers.ShipperID=orders.ShipVia 
+        GROUP BY ShipperID 
+        ORDER BY COUNT(ShipVia)
+        LIMIT 1;
+
+26. Buatlah Query untuk menampilkan Order Details dengan lengkap.
+Jwb: SELECT OrderID, ProductName, CategoryName, products.UnitPrice, Quantity, Country as MadeIn
+         FROM orderdetails, categories, products, suppliers
+         WHERE categories.CategoryID=products.CategoryID 
+         AND products.ProductID=orderdetails.ProductID 
+        AND products.SupplierID=suppliers.SupplierID
+        ORDER BY OrderID ASC;  
+
+27. Carilah Product yang paling banyak di Order.
+Jwb : SELECT ProductName, COUNT(orderdetails.ProductID) as 'Jumlah' 
+          FROM products, orderdetails
+          WHERE products.ProductID=orderdetails.ProductID
+          GROUP BY products.ProductID
+          ORDER BY COUNT(orderdetails.ProductID) DESC
+          LIMIT 1;
+
+28. -Carilah Product yang paling sedikit di Order.
+Jwb : SELECT ProductName, COUNT(orderdetails.ProductID) as 'Jumlah' 
+          FROM products, orderdetails
+          WHERE products.ProductID=orderdetails.ProductID
+          GROUP BY products.ProductID
+          ORDER BY COUNT(orderdetails.ProductID) ASC
+          LIMIT 1;
+
+
+29. Carilah Berapa banyak Quantity untuk setiap Product yang terjual di order details.
+Jwb: SELECT ProductName, Quantity 
+         FROM products, orderdetails
+         WHERE orderdetails.ProductID=products.ProductID
+         GROUP BY ProductName;
+
+30.Carilah Customer yang berasal dari kota yang berakhiran vowels (a,i,u,e,o). Hasil tidak boleh duplikasi.
+Jwb : SELECT DISTINCT CustomerID, City from customers
+          WHERE City like '%a' 
+         or  City like '%i'  
+         or  City like '%u'  
+         or  City like '%e'  
+         or  City like '%o';
+
+31. carilah customer yang berasal dari negara yang awalnya bukan dari vowel (a,i,u,e,o), Hasil tidak boleh duplikasi.
+Jwb : SELECT DISTINCT CustomerID, Country
+          FROM customers 
+          WHERE Country not like 'A%'
+          AND Country not like 'I%' 
+          AND Country not like 'U%' 
+          AND Country not like 'E%' 
+          AND Country not like 'O%'
+
+32. -Buatlah Query untuk mencari ContactName Customer beserta Title nya.
+Jwb : SELECT concat(ContactName,'(',SUBSTRING(ContactTitle, 1, 3),')') AS 'Contact&Title' 
+         FROM customers
+
+
+33. Buatlah Query untuk menampilkan jumlah setiap customer berdasarkan title nya.
+Jwb:SELECT concat(COUNT(CustomerID),' ',ContactTitle) as 'Total Customer By Title' 
+        FROM customers GROUP BY ContactTitle 
+        ORDER BY COUNT(CustomerID) ASC ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
