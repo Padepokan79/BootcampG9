@@ -1,0 +1,96 @@
+Nama : Wawan Setiawan
+Soal Query
+
+1. Tampilkan nip, nama, agama, yang pensiun pada tanggal 2036-08-06 atau 2013-02-27.
+
+select p.nip, p.nama, a.nmagama, xx.tglpensiun
+from mstpegawai p
+inner join agama_tbl a
+on p.agama=a.nmagama
+inner join automut xx
+on xx.nip=p.nip
+where xx.tglpensiun='2036-08-06' or '2013-02-27'
+
+2. Tampilkan data pegawai dan jumlah hutang yang memiliki jumlahhutang kurang dari 700000.
+SELECT p.nip, p.nama, h.jmlhutang
+from mstpegawai p
+INNER JOIN hutang h
+ON p.NIP=h.nip
+WHERE h.jmlhutang< 700000
+LIMIT 10
+
+3. buat query menampilkan semua pegawai yang lahir antara tahun 1947-06-06 sampai 1964-03-19.
+
+SELECT nip, nama, TGLLHR
+FROM mstpegawai
+WHERE Tgllhr
+BETWEEN '1947-06-06' and '1964-03-19'
+LIMIT 3
+
+4. Tampilkan nama,gapok,nama pangkat pegawai yang memiliki gaji terbesar
+SELECT p.NIP,p.NAMA, g.gapokb,pk.nmpangkat
+FROM mstpegawai p
+INNER JOIN fgaji_detil_ukp g
+ON g.NIP=p.NIP
+INNER JOIN pangkat_tbl pk
+ON p.KDPANGKAT=pk.KDPANGKAT
+WHERE p.NIP =(
+	SELECT NIP
+	FROM fgaji_detil_ukp
+	HAVING MAX(gapokb)
+)
+
+
+##M Zada Widiyanto##
+1. Tampilkan Pegawai yang memiliki gelar depan
+
+2. Tampilkan Pegawai yang menjadi Kepala Sekolah SD GOL.IV
+
+3. Tampilkan Pegawai yang menjabat menjadi Gubernur
+
+4. Tampilkan Pegawai dengan gaji pokok tertinggi
+
+
+Dari Fatih
+1. Tampilkan tanggal gaji, nip, nama, nama pangkat dan gaji bersih dari tabel fgaji;
+SELECT tglgaji,nip,nama,kdpangkat, bersih
+from fgaji LIMIT 10
+
+2. Tampilkan 5 nama yang memiliki gaji tunjangan istri tertinggi dari tabel fgaji.di urut dari yang tertinggi.
+SELECT nama, TJISTRI
+from fgaji
+GROUP BY TJISTRI
+ORDER BY TJISTRI desc
+LIMIT 5
+
+3. Tampilkan 1 nama yang memiliki gaji tunjangan anak terendah dari tabel fgaji.
+SELECT nama
+from fgaji
+WHERE tjanak=
+	(SELECT MIN(tjanak)
+	FROM fgaji)
+LIMIT 1
+
+4. Tampilkan 1 nama yang memiliki gaji potongan terendah dari tabel fgaji.
+SELECT nama
+from fgaji
+WHERE POTONGAN=
+	(SELECT MIN(POTONGAN)
+	FROM fgaji)
+LIMIT 1
+
+
+dari Resi
+1. Tampilkan Data pegawai yang memiliki anak 2 dan memiliki gaji terbesar 
+
+SELECT p.NAMA, p.janak
+FROM mstpegawai p
+INNER JOIN fgaji g
+ON p.NIP=g.nip
+where p.JANAK=2 and g.bersih in (SELECT bersih from fgaji)
+LIMIT 3
+
+2. Tampilkan rata-rata gaji pegawai berdasarkan jabatan
+3. Tampilkan pegawai yang tidak mencantumkan alamat dan lahir tahun 1963
+4.Tampilkan  jumlah hutang seluruh pegawai berdasarkan jenis hutang (dari yang terbesar)
+
