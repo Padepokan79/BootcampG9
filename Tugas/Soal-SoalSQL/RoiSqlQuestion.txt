@@ -1,0 +1,9 @@
+Tugas :
+
+1. Tampilkan berapa banyak pegawai berdasarkan pendidikannya
+
+2. Tampilkan nama dan pendidikan pegawai yang memiliki pangkat Pembina Utama Muda
+
+3. Tampilkan nama pegawai, nama pangkat, gaji pokok, gaji kotor dan gaji bersih yang tanggal penggajiannya 1 Januari 2017
+
+4. Tampilkan nama pegawai beserta nama status kawin yang status kawinnya janda/duda beranak 1

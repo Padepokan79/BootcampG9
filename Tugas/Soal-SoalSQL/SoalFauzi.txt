@@ -1,0 +1,4 @@
+1.tampilkan NIP,hubungan keluarga, dan namanya dari yang hubungan keluargnya adalah anak tiri
+2.tampilkan NMKEL,NMHUTANG yang memiliki hutang 'hutang kelebihan gaji' dan memiliki hutang di atas rata2 jmlhutang menggunakan HAVING
+3.tampilkan semua field yang ada di jabatankhusus_tbl yang pensiunnya paling rendah
+4.tampilkan semua field yang ada di jabatankhusus_tbl yang JMLnya paling tinggi

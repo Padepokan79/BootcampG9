@@ -1,0 +1,6 @@
+erik sutiawan
+
+1. Tampilkan nip, nama_pegawai, gaji_bersih pegawai yang menerima gaji pada tanggal "2014-10-01"
+2. Tampilkan berapa data pegawai yang beragama islam dan jumlahkan pendapatan gaji_bersihnya
+3. Tampilkan data pegawai yang tidak mempunyai istri / suami
+4. Tampilkan jumlah anak dari pegawai yang telah pensiun
