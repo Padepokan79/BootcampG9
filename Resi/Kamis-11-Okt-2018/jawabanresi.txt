@@ -1,0 +1,139 @@
+1. Tampilkan Data pegawai yang memiliki anak 2 dan memiliki gaji terbesar 
+Jawab :
+SELECT NIP, NAMA, GAPOK, JANAK 
+FROM fgaji 
+WHERE JANAK = 2 
+AND GAPOK = (
+SELECT max(GAPOK) 
+FROM fgaji) 
+;
+
+2. Tampilkan rata-rata gaji pegawai berdasarkan pangkat
+Jawab :
+SELECT NMPANGKAT,nama , AVG(gapok) as 'Rata-Rata Gaji'
+FROM mstpegawai,pangkat_tbl
+WHERE pangkat_tbl.KDPANGKAT=mstpegawai.KDPANGKAT 
+GROUP BY pangkat_tbl.KDPANGKAT; 
+
+3. Tampilkan pegawai yang tidak mencantumkan alamat dan lahir tahun 1963
+Jawab :
+SELECT NAMA, TGLLHR, ALAMAT
+FROM mstpegawai 
+WHERE ALAMAT =' '
+AND TGLLHR LIKE '%1963%' LIMIT 10;
+
+4.Tampilkan  jumlah hutang seluruh pegawai berdasarkan jenis hutang (dari yang terbesar)
+Jawab :
+SELECT NMHUTANG, SUM(JMLHUTANG) as 'Jumlah Hutang' 
+FROM hutang_pegawai,jnshutang
+WHERE jnshutang.NO=hutang_pegawai.KDHUTANG
+GROUP BY NO;
+
+5. Tampilkan NIP, NAMA, KDSTAWIN, NMSTAWIN, JISTRI, JANAK, urutkan berdasarkan nama. (10 nama)
+Jawab :
+SELECT NIP, NAMA, mstpegawai.KDSTAWIN, NMSTAWIN, JISTRI, JANAK
+FROM mstpegawai, stawin_tbl
+WHERE stawin_tbl.kdstawin=mstpegawai.KDSTAWIN
+ORDER BY NAMA 
+LIMIT 10;
+
+
+6. Tampilkan NAMA, KDPANGKAT, NMPANGKAT, NILAI_BAWAH, NILAI_ATAS dan tidak ada duplikat nama. (10 nama)
+Jawab : 
+SELECT NAMA, mstpegawai.KDPANGKAT, NMPANGKAT, NILAI_BAWAH, NILAI_ATAS
+FROM mstpegawai, pangkat_tbl, gapok_tbl
+WHERE pangkat_tbl.KDPANGKAT=mstpegawai.KDPANGKAT
+AND gapok_tbl.KDPANGKAT=pangkat_tbl.KDPANGKAT 
+LIMIT 10;
+
+7. Tampilkan NMJABATAN, JML , dan PENSIUN yang memiliki jumlah tunjangan terbesar 
+Jawab : 
+SELECT NMJABATAN , JML , PENSIUN
+FROM t_tunjangan
+WHERE JML IN(
+SELECT MAX(JML) 
+FROM t_tunjangan)
+
+8. Tampilkan NIP dan NAMA yang memiliki status "SENDIRI"
+Jawab:
+SELECT NIP, NAMA
+FROM skpp_pegawai , stawin_tbl
+WHERE stawin_tbl.kdstawin=skpp_pegawai.KDSTAWIN
+AND nmstawin="TIDAK KAWIN"
+ORDER BY nama 
+LIMIT 10
+
+9. Tampilkan berapa banyak pegawai berdasarkan pendidikannya
+Jawab:
+SELECT pendidikan_tbl.PENDIDIKAN,COUNT(NIP) as 'Jumlah Pegawai'
+FROM mstpegawai,pendidikan_tbl
+GROUP BY pendidikan_tbl.PENDIDIKAN
+LIMIT 100;
+
+
+
+10. Tampilkan nama dan pendidikan pegawai yang memiliki pangkat Pembina Utama Muda
+Jawab:
+SELECT NAMA,PENDIDIKAN, NMPANGKAT
+FROM mstpegawai,pangkat_tbl
+WHERE pangkat_tbl.KDPANGKAT=mstpegawai.KDPANGKAT
+AND NMPANGKAT= 'Pembina Utama Muda';
+
+
+11. Tampilkan nama pegawai, nama pangkat, gaji pokok, gaji kotor dan gaji bersih yang tanggal penggajiannya 1 Januari 2017
+Jawab:
+SELECT NAMA, NMPANGKAT, GAPOK, KOTOR, BERSIH 
+FROM fgaji,pangkat_tbl
+WHERE pangkat_tbl.KDPANGKAT=fgaji.KDPANGKAT
+AND TGLGAJI='2017-01-01'
+LIMIT 10;
+
+
+12. Tampilkan nama pegawai beserta nama status kawin yang status kawinnya janda/duda beranak 1
+Jawab:
+SELECT NAMA, nmstawin
+FROM mstpegawai,stawin_tbl
+WHERE stawin_tbl.kdstawin=mstpegawai.KDSTAWIN
+AND nmstawin='JANDA/DUDA' AND JANAK =1;
+
+
+13. Tampilkan nip, nama, agama, yang pensiun pada tanggal 2036-08-06 atau 2013-02-27.
+Jawab:
+
+
+14. Tampilkan data pegawai dan jumlah hutang yang memiliki jumlahhutang kurang dari 700000.
+Jawab:
+
+
+15. buat query menampilkan semua pegawai yang lahir antara tahun 1947-06-06 sampai 1964-03-19.
+Jawab:
+
+
+16. Tampilkan nama,gapok,nama pangkat pegawai yang memiliki gaji terbesar
+Jawab:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
