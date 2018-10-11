@@ -1,0 +1,101 @@
+===Soal Khoerul Fatih===
+
+1. Tampilkan tanggal gaji, nip, nama, nama pangkat dan gaji bersih dari tabel fgaji;
+	Jawab : SELECT tglgaji,nip,nama,pangkat_tbl.Nmpangkat,bersih 
+		from fgaji 
+		JOIN pangkat_tbl on fgaji.KDPANGKAT=pangkat_tbl.KDPANGKAT;
+
+2. Tampilkan 5 nama yang memiliki gaji tunjangan istri tertinggi dari tabel fgaji.di urut dari yang tertinggi.
+	Jawab : SELECT NAMA,TJISTRI 
+		from fgaji
+		group by TJISTRI desc limit 5
+
+3. 3. Tampilkan 1 nama yang memiliki anak 1 dan gaji tunjangan anak terendah dari tabel fgaji.
+	Jawab : SELECT NAMA,JANAK,TJANAK 
+		from fgaji
+		WHERE JANAK=1
+		group by TJANAK limit 1
+
+4. Tampilkan 1 nama yang memiliki gaji potongan terendah dari tabel fgaji.
+	Jawab : SELECT NAMA,Potongan
+		from fgaji
+		WHERE potongan is not null
+		group by potongan LIMIT 1
+
+
+
+
+===Soal Sahdan Hidayatul Muzaki===
+
+5. Cari data pegawai yang memiliki gaji pokok diatas rata-rata, tunjangan fungsi diatas 700.000 dan tidak memiliki tunjangan anak.
+	Jawab : select NAMA, GAPOK, TJFUNGSI
+		FROM fgaji
+		WHERE GAPOK>(SELECT AVG(GAPOK) FROM mstpegawai)
+		and TJFUNGSI>700000
+		and TJANAK = 0
+6. Tampilkan nama pegawai, total hutang, sisa hutang dan sisa cicilan yang memiliki jumlah hutang <= 500.000, dengan pendidikan Sarjana dan baru mencicil sebanyak 10 kali.
+	Jawab :
+7. Tampilkan nama pegawai, nama keluarga, jumlah anak, status perkawinan, tanggal lahir dengan daerah Golongan I, dengan Eselon 1A dan beragama Kristen (untuk kondisi menggunakan kata kunci HAVING (bukan WHERE)).
+	Jawab :
+8. Tampilkan data gaji yang untuk tanggal 01 Maret 2014 sampai 30 Juni 2014 dimana pegawainya belum menikah, huruf pertama dari namanya tidak dimulai oleh huruf vokal dan memiliki pangkat Penata Muda.
+	Jawab :
+
+
+===Soal Nispi Abdul Aziz===
+9. Tampilkan Pegawai dan nama pangkat pegawai tsb. yang berstatus Janda/Duda
+	Jawab : SELECT NAMA, pangkat_tbl.NMPANGKAT, tb_stawin.NM_STAWIN
+		FROM mstpegawai
+		JOIN pangkat_tbl on pangkat_tbl.KDPANGKAT=mstpegawai.KDPANGKAT
+		JOIN tb_stawin on tb_stawin.KD_STAWIN=mstpegawai.KDSTAWIN
+		WHERE tb_stawin.NM_STAWIN = "DUDA" or tb_stawin.NM_STAWIN= "JANDA"
+
+10. Tampilkan pegawai yang bergelar M.si
+	Jawab : SELECT NAMA 
+		FROM mstpegawai 
+		WHERE nama LIKE "%M.Si%"
+
+11. Tampilkan jumlah cicilan hutang yang berpangkat Pengatur Muda
+	Jawab : 
+
+12. Tampilkan pegawai yang bertatus janda dan mempunyai anak
+	Jawab : SELECT NAMA, tb_stawin.NM_STAWIN as 'Status', JANAK as JumlahAnak
+		FROM mstpegawai
+		JOIN tb_stawin on tb_stawin.KD_STAWIN=mstpegawai.KDSTAWIN
+		WHERE tb_stawin.NM_STAWIN= "JANDA" and JANAK > 0
+
+===Soal Anissa Lutfi===
+
+13. Tampilkan NIP, NAMA, KDSTAWIN, NMSTAWIN, JISTRI, JANAK, urutkan berdasarkan nama. (10 nama)
+	Jawab : SELECT NIP, NAMA, KDSTAWIN, tb_stawin.NM_STAWIN, JISTRI, JANAK
+		FROM mstpegawai
+		JOIN tb_stawin on tb_stawin.KD_STAWIN=mstpegawai.KDSTAWIN
+		GROUP By NAMA LIMIT 10
+
+14. Tampilkan NAMA, KDPANGKAT, NMPANGKAT, NILAI_BAWAH, NILAI_ATAS dan tidak ada duplikat nama. (10 nama)
+	Jawab : 
+
+15. Tampilkan NMJABATAN, JML , dan PENSIUN yang memiliki jumlah tunjangan terbesar 
+	Jawab : 
+
+16. Tampilkan NIP dan NAMA yang memiliki status "SENDIRI"
+	Jawab : SELECT NIP, NAMA,tb_stawin.NM_STAWIN
+		FROM mstpegawai
+		JOIN tb_stawin on tb_stawin.KD_STAWIN=mstpegawai.KDSTAWIN
+		where tb_stawin.NM_STAWIN = "SENDIRI"
+		GROUP By NAMA LIMIT 10
+
+==Soal erik sutiawan==
+
+1. Tampilkan nip, nama_pegawai, gaji_bersih pegawai yang menerima gaji pada tanggal "2014-10-01"
+2. Tampilkan berapa data pegawai yang beragama islam dan jumlahkan pendapatan gaji_bersihnya
+3. Tampilkan data pegawai yang tidak mempunyai istri / suami
+4. Tampilkan jumlah anak dari pegawai yang telah pensiun
+
+=== Soal Roihatul===
+1. Tampilkan berapa banyak pegawai berdasarkan pendidikannya
+
+2. Tampilkan nama dan pendidikan pegawai yang memiliki pangkat Pembina Utama Muda
+
+3. Tampilkan nama pegawai, nama pangkat, gaji pokok, gaji kotor dan gaji bersih yang tanggal penggajiannya 1 Januari 2017
+
+4. Tampilkan nama pegawai beserta nama status kawin yang status kawinnya janda/duda beranak 1 
