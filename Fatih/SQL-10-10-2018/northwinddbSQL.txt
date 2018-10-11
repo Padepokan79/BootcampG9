@@ -72,7 +72,11 @@
 
 
 12.	-Tampilkan List Product dengan Lengkap.
-	Jawab : SELECT * FROM products
+	Jawab : SELECT ProductID, ProductName, categories.CategoryName, categories.Description, suppliers.CompanyName, QuantityPerUnit, UnitPrice, UnitsInStock
+		FROM products
+		JOIN categories ON categories.CategoryID=products.CategoryID
+		JOIN suppliers ON suppliers.SupplierID=products.SupplierID
+		ORDER BY ProductID
 
 
 13.	-Tampilkan Nama Product dengan harga Terbesar.
@@ -80,6 +84,7 @@
 		FROM products 
 		WHERE UnitPrice = (
 		SELECT MAX(UnitPrice) from products)
+  
 
 
 14.	Tampilkan Nama Product dengan harga Terkecil.
@@ -144,7 +149,12 @@
 
 
 23.	-Buatlah Query untuk menamplilkan List Order.
-	Jawab : SELECT * FROM orders
+	Jawab : SELECT OrderID,customers.ContactName,employees.LastName,OrderDate,shippers.CompanyName as shipper, ShipCity,ShipCountry 
+		FROM orders 
+		JOIN customers On customers.CustomerID=orders.CustomerID
+		JOIN employees On employees.EmployeeID=orders.EmployeeID
+		JOIN shippers On shippers.ShipperID=orders.ShipVia
+		ORDER BY OrderId
 
 
 24.	-Siapakah Customer yang paling banyak membuat order.
@@ -177,16 +187,14 @@
 27.	-Carilah Product yang paling banyak di Order.
 	Jawab : SELECT P.ProductName,count(O.ProductID) as Jumlah 
 		FROM products P 
-		INNER JOIN `order details` O 
-		on O.ProductId=P.productID 
+		INNER JOIN `order details` O on O.ProductId=P.productID 
 		GROUP BY P.productName 
 		ORDER BY Jumlah desc limit 1
 
 28.	-Carilah Product yang paling sedikit di Order.
 	Jawab : SELECT P.ProductName,count(O.ProductID) as Jumlah 
 		FROM products P 
-		INNER JOIN `order details` O 
-		on O.ProductId=P.productID 
+		INNER JOIN `order details` O on O.ProductId=P.productID 
 		GROUP BY P.productName 
 		ORDER BY Jumlah asc limit 1
 
@@ -198,9 +206,9 @@
 		ORDER BY Quantity desc 
 
 30.	-Carilah Customer yang berasal dari kota yang berakhiran vowels (a,i,u,e,o). Hasil tidak boleh duplikasi.
-	Jawab : Select CompanyName,city 
-		from customers 
-		where City like '%a' 
+	Jawab : SELECT CompanyName,city 
+		FROM customers 
+		WHERE City like '%a' 
 		or City like '%e' 
 		or City like '%i' 
 		or City like '%u' 
@@ -208,9 +216,9 @@
 		order by City
 
 31.	-carilah customer yang berasal dari negara yang awalnya bukan dari vowel (a,i,u,e,o), Hasil tidak boleh duplikasi.
-	Jawab : CompanyName,country 
-		from customers 
-		where not(country like 'a%' 
+	Jawab : SELECT CompanyName,country 
+		FROM customers 
+		WHERE not(country like 'a%' 
 		or country like 'e%' 
 		or country like 'i%' 
 		or country like 'u%' 
@@ -218,10 +226,11 @@
 		order by country
 
 32.	-Buatlah Query untuk mencari ContactName Customer beserta Title nya.
- 	Jawab : select ContactName,ContactTitle 
-		from customers
+ 	Jawab : SELECT ContactName,ContactTitle 
+		FROM customers
+
 33.	-Buatlah Query untuk menampilkan jumlah setiap customer berdasarkan title nya.
-	Jawab : select count(ContactTitle) as jumlah, ContactTitle 
-		from customers 
-		group by ContactTitle 
-		order by jumlah
+	Jawab : SELECT count(ContactTitle) as jumlah, ContactTitle 
+		FROM customers 
+		GROUP BY ContactTitle 
+		ORDER BY jumlah
