@@ -1,0 +1,14 @@
+Nama :	Faisal Siswanto
+
+Soal :
+
+1. Tampilkan data dari KDAKUN, NMAKUN, idakun, urt !
+
+2. Tampilkan NIP, NAMA, KDPANGKAT, GAPOK, JANAK, JISTRI dari NAMA yang mempunyai
+   kata 'FAISAL' di dalamnya, yang belum mempunyai anak dan istri. (tidak boleh
+   ada redudansi data !)
+
+3. Tampilkan NIP beserta Jumlah Cicilan yang sudah dibayarkan Tertinggi !
+
+4. Tampilkan NIP, NMKEL, TGLLHR dari semua keluarga dengan kepala keluarganya 
+   (KDHUBKEL = 00)bergelar dokter (dr). !
