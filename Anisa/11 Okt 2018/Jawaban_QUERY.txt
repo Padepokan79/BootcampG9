@@ -1,0 +1,91 @@
+Soal Anissa Luthfi Febrianti
+
+1. Tampilkan NIP, NAMA, KDSTAWIN, NMSTAWIN, JISTRI, JANAK, urutkan berdasarkan nama. (10 nama)
+   Jawab : SELECT NIP, NAMA, skpp_pegawai.KDSTAWIN, nmstawin, jistri, janak
+	   FROM skpp_pegawai , stawin_tbl
+	   WHERE stawin_tbl.kdstawin=skpp_pegawai.KDSTAWIN
+	   ORDER BY nama 
+	   LIMIT 10
+
+2. Tampilkan NAMA, KDPANGKAT, NMPANGKAT, NILAI_BAWAH, NILAI_ATAS dan tidak ada duplikat nama. (10 nama)
+   Jawab : SELECT Nama,pangkat_tbl.KDPANGKAT, NMPANGKAT, nilai_bawah , nilai_atas
+	   FROM mstpegawai , gapok_tbl , pangkat_tbl
+	   WHERE gapok_tbl.MASKER=mstpegawai.MASKER
+	   AND pangkat_tbl.KDPANGKAT=mstpegawai.KDPANGKAT 
+	   GROUP BY NAMA 
+	   LIMIT 10 
+
+3. Tampilkan NMJABATAN, JML , dan PENSIUN yang memiliki jumlah tunjangan terbesar 
+   Jawab : SELECT NMJABATAN , JML , PENSIUN
+	   FROM t_tunjangan
+	   WHERE JML 
+	   IN(
+	   SELECT MAX(JML
+	   ) 
+ 	   FROM t_tunjangan)
+
+4. Tampilkan NIP dan NAMA yang memiliki status "TIDAK KAWIN"
+   Jawab : SELECT NIP, NAMA
+	   FROM skpp_pegawai , stawin_tbl
+	   WHERE stawin_tbl.kdstawin=skpp_pegawai.KDSTAWIN
+	   AND nmstawin="TIDAK KAWIN"
+	   ORDER BY nama 
+	   LIMIT 10
+--------------------------------------------------------------------------------------------------------------------------------------
+erik sutiawan
+
+1. Tampilkan nip, nama_pegawai, gaji_bersih pegawai yang menerima gaji pada tanggal "2014-10-01"
+   Jawab : SELECT NIP, NAMA, BERSIH 
+           AS "GAJI BERSIH"
+	   FROM fgaji 
+	   WHERE TGLGAJI="2014-10-01"
+
+2. Tampilkan berapa data pegawai yang beragama islam dan jumlahkan pendapatan gaji_bersihnya
+   Jawab : (SELECT COUNT(fgaji.NAMA) AS "PEGAWAI" , SUM(BERSIH) AS "GAJI"
+	    FROM fgaji, agama_tbl, mstpegawai
+	    WHERE agama_tbl.KDAGAMA=fgaji.AGAMA
+	    AND NMAGAMA="ISLAM") (Belum beres )
+ 
+3. Tampilkan data pegawai yang tidak mempunyai istri / suami
+   Jawab : SELECT *
+	   FROM mstpegawai , stawin_tbl
+	   WHERE stawin_tbl.kdstawin=mstpegawai.KDSTAWIN
+	   AND nmstawin="TIDAK KAWIN"
+
+4. Tampilkan jumlah anak dari pegawai yang telah pensiun
+   Jawab : SELECT NAMA, JANAK , TGLPENSIUN
+	   FROM fgaji, automut
+	   WHERE automut.tglgaji=fgaji.TGLGAJI
+	   AND TGLPENSIUN > 2018-08-30 LIMIT 10
+
+-------------------------------------------------------------------------------------------------------------------------------------
+Nama :	Faisal Siswanto
+
+Soal :
+
+1. Tampilkan data dari KDAKUN, NMAKUN, idakun, urt !
+   Jawab : SELECT KDAKUN, NMAKUN, idakun, urt
+	   FROM akun_tbl, akun_konv
+	   WHERE akun_tbl.KDTRANS = akun_kov.kdtrans
+
+2. Tampilkan NIP, NAMA, KDPANGKAT, GAPOK, JANAK, JISTRI dari NAMA yang mempunyai
+   kata 'FAISAL' di dalamnya, yang belum mempunyai anak dan istri. (tidak boleh
+   ada redudansi data !)
+   Jawab : SELECT NIP, NAMA, KDPANGKAT, GAPOK, JANAK, JISTRI
+	   FROM mstpegawai
+	   WHERE NAMA LIKE '%FAISAL%'
+	   AND JANAK = 0
+	   OR JISTRI = 0
+	   GROUP BY (NIP)
+
+3. Tampilkan NIP beserta Jumlah Cicilan yang sudah dibayarkan Tertinggi !
+   Jawab : SELECT NIP, SUM(JMLCICILAN) AS `Jumlah Cicilan`
+	   FROM hutang
+	   GROUP BY (NIP) DESC LIMIT 1
+
+4. Tampilkan NIP, NMKEL, TGLLHR dari semua keluarga dengan kepala keluarganya 
+   (KDHUBKEL = 00)bergelar dokter (dr). !
+   Jawab : SELECT NIP, NMKEL, TGLLHR 
+	   FROM keluarga 
+	   WHERE KDHUBKEL = 00
+	   AND NMKEL like 'dr.%'
