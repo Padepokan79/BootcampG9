@@ -1,0 +1,8 @@
+Nama : Wawan Setiawan
+Soal Query
+
+1. Tampilkan nip, nama, agama, yang pensiun pada tanggal 2036-08-06 atau 2013-02-27.
+2. Tampilkan data pegawai dan jumlah hutang yang memiliki jumlahhutang kurang dari 700000.
+3. buat query menampilkan semua pegawai yang lahir antara tahun 1947-06-06 sampai 1964-03-19.
+4. Tampilkan nama,gapok,nama pangkat pegawai yang memiliki gaji terbesar
+
