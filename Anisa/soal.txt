@@ -1,0 +1,12 @@
+Soal Anissa Luthfi Febrianti
+
+1. Tampilkan NIP, NAMA, KDSTAWIN, NMSTAWIN, JISTRI, JANAK, urutkan berdasarkan nama. (10 nama)
+   Jawab :
+
+2. Tampilkan NAMA, KDPANGKAT, NMPANGKAT, NILAI_BAWAH, NILAI_ATAS dan tidak ada duplikat nama. (10 nama)
+   Jawab : 
+
+3. Tampilkan NMJABATAN, JML , dan PENSIUN yang memiliki jumlah tunjangan terbesar 
+   Jawab : 
+
+4. Tampilkan NIP dan NAMA yang memiliki status "SENDIRI"
