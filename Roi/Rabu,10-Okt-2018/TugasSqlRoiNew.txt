@@ -1,0 +1,260 @@
+Tugas :
+1. Buatlah Query untuk menampilkan Data Customers CustomerIDContactName, ContactTitle, City, Country, RegionDescription
+
+query : 
+SELECT customers.CustomerID, customers.ContactName, customers.ContactTitle, customers.City, customers.Country, region.RegionDescription
+FROM customers  
+INNER JOIN region  
+ON customers.region=region.regionid
+ORDER BY customers.CustomerID ASC;
+
+2. Buatlah Query untuk mencari berasal dari negara mana saja customer kita berasal.
+
+query :
+SELECT CompanyName,Country FROM customers GROUP BY Country;
+
+3. Buatlah Query untuk mencari Customer yang berada pada Eastern Region.
+
+query :
+SELECT customers.CompanyName
+FROM customers 
+INNER JOIN region 
+ON customers.Region=region.RegionID 
+WHERE region.RegionDescription='Eastern';
+
+4. Buatlah Query untuk mencari Customer yang merupakan Seorang owner dari Sebuah Company.
+
+query : 
+SELECT CompanyName,ContactName,ContactTitle 
+FROM customers
+WHERE ContactTitle='Owner';
+
+5. Buatlah Query untuk mencari Customer yang merupakan Seorang Manager dari sebuah company.
+
+query :
+SELECT CompanyName,ContactName,ContactTitle 
+FROM customers
+WHERE ContactTitle LIKE '%Manager%';
+
+6. Buatlah Query untuk Mencari banyaknya Customer dari setiap negara.
+
+query :
+SELECT Country,COUNT(CustomerID) as 'Banyak Customer'
+FROM customers 
+GROUP BY Country;
+
+7. Tampilkan employee yang memiliki Gaji Tertinggi.
+
+query :
+SELECT * FROM employees WHERE Salary=(SELECT MAX(Salary) FROM employees);
+
+8. Tampilkan employee yang memiliki Gaji Terendah.
+
+query :
+SELECT * FROM employees WHERE Salary=(SELECT MIN(Salary) FROM employees);
+
+9. Hitung Rata-rata gaji Employee.(Hasil dari rata-rata dibulatkan kebawah).
+
+query :
+SELECT FLOOR(AVG(Salary)) as 'Rata2 Gaji' FROM employees;
+
+10. Hitung Besar Jumlah Pengeluaran dari Gaji Employe. (Hasil dibulatkan keangkat terdekat).
+
+query :
+SELECT ROUND(SUM(Salary)) as 'Total Pengeluaran Gaji' FROM employees;
+
+11. Tampilkan Territori untuk setiap employee, lengkap dengan territori description dan region description nya.
+
+query :
+SELECT employeeterritories.EmployeeID,territories.TerritoryDescription,region.RegionDescription 
+FROM employeeterritories
+INNER JOIN territories
+ON territories.TerritoryID=employeeterritories.TerritoryID
+INNER JOIN region
+ON territories.RegionID=region.RegionID
+ORDER BY employeeterritories.EmployeeID ASC;
+
+12. Tampilkan List Product dengan Lengkap.
+
+query :
+SELECT products.ProductID, products.ProductName, suppliers.CompanyName, 
+categories.CategoryName, products.QuantityPerUnit, products.UnitPrice,
+products.UnitsInStock, products.UnitsOnOrder, products.ReorderLevel, products.Discontinued
+FROM suppliers 
+INNER JOIN products
+ON products.SupplierID=suppliers.SupplierID
+INNER JOIN categories
+ON products.CategoryID=categories.CategoryID;
+
+13. Tampilkan Nama Product dengan harga Terbesar.
+
+query :
+SELECT ProductName,UnitPrice 
+FROM products 
+WHERE UnitPrice=(SELECT MAX(UnitPrice) FROM products);
+
+14. Tampilkan Nama Product dengan harga Terkecil.
+
+query :
+SELECT ProductName,UnitPrice 
+FROM products 
+WHERE UnitPrice=(SELECT MIN(UnitPrice) FROM products);
+
+15. Tampilkan Banyaknya product untuk setiap kategori
+
+query : 
+SELECT categories.CategoryName,COUNT(products.CategoryID) as 'Banyak Product per Kategori' 
+FROM products 
+INNER JOIN categories
+ON products.CategoryID=categories.CategoryID
+GROUP BY products.CategoryID;
+
+16. Tampilkan Product yang sudah tidak diproduksi lagi.
+
+query :
+SELECT ProductName 
+FROM products 
+WHERE Discontinued='1'; 
+
+17. Tampilkan Product masih diproduksi tapi  telah habis stocknya.
+
+query :
+SELECT ProductName
+FROM products
+WHERE Discontinued='0' AND UnitsInStock='0';
+
+18. Hitung Rata-rata harga product.(Hasil dibulatkan kebawah)
+
+query :
+SELECT ProductName,FLOOR(AVG(UnitPrice))as 'Rata2 Harga Produk' FROM products;
+
+19. Tampilkan Product yang harganya dibawah rata-rata.
+
+query :
+SELECT ProductName,Unitprice FROM products WHERE Unitprice<(SELECT FLOOR(AVG(UnitPrice))as Rata2HargaProduk FROM products) ;
+
+20. Tampilkan Product yang Stocknya masih diatas 100.
+
+query :
+SELECT ProductName,UnitsInStock 
+FROM products WHERE UnitsInStock>100;
+
+21. Tampilkan Product apa saja yang termasuk kedalam kategori Seafood.
+
+query :
+SELECT products.ProductName,categories.CategoryName 
+FROM products 
+INNER JOIN categories
+ON products.CategoryID=categories.CategoryID
+WHERE categories.CategoryName='Seafood';
+
+
+22. Tampilkan Product yang berasal dari Japan dan Singapore.
+
+query : 
+SELECT products.ProductName,suppliers.Country 
+FROM products
+INNER JOIN suppliers
+ON suppliers.SupplierID=products.SupplierID
+WHERE Country='Japan' OR Country='Singapore';
+
+23. Buatlah Query untuk menamplilkan List Order.
+
+query :
+SELECT orders.OrderID,customers.ContactName,employees.LastName,orders.OrderDate,shippers.CompanyName as Shipper,
+orders.ShipCity,orders.ShipCountry 
+FROM shippers
+INNER JOIN employees
+INNER JOIN orders
+INNER JOIN customers
+ON shippers.ShipperID=orders.ShipVia
+AND employees.EmployeeID=orders.EmployeeID
+AND customers.CustomerID=orders.CustomerID 
+ORDER BY orders.OrderID ASC;
+
+
+24. Siapakah Customer yang paling banyak membuat order.
+
+query :
+SELECT customers.ContactName,COUNT(orders.CustomerID) as 'jumlah banyak'
+FROM orders 
+INNER JOIN customers
+ON customers.CustomerID=orders.CustomerID 
+GROUP BY orders.CustomerID ORDER BY 'jumlah banyak' DESC LIMIT 1;
+
+25. Layanan Shipper apa yang paling sedikit dipakai.
+
+query :
+SELECT shippers.CompanyName,COUNT(orders.CustomerID) as 'jumlah sedikit'
+FROM orders 
+INNER JOIN shippers
+ON shippers.ShipperID=orders.ShipVia
+GROUP BY orders.ShipVia ORDER BY jumlahsedikit ASC LIMIT 1;
+
+26. Buatlah Query untuk menampilkan Order Details dengan lengkap.
+
+query :
+SELECT orderdetails.OrderID,products.ProductName,categories.CategoryName,orderdetails.UnitPrice,orderdetails.Quantity,suppliers.Country
+FROM suppliers 
+INNER JOIN products
+INNER JOIN categories
+INNER JOIN orderdetails
+ON suppliers.SupplierID=products.SupplierID
+AND products.CategoryID=categories.CategoryID
+AND products.ProductID=orderdetails.ProductID
+ORDER BY orderdetails.OrderID ASC;
+
+27. Carilah Product yang paling banyak di Order.
+
+query : 
+SELECT ProductName,MAX(UnitsOnOrder) as 'Paling banyak order'
+FROM products
+WHERE UnitsOnOrder=(SELECT MAX(UnitsOnOrder) FROM products);
+
+28. Carilah Product yang paling sedikit di Order.
+query :
+SELECT ProductName,MIN(UnitsOnOrder) as 'Paling sedikit order'
+FROM products
+WHERE UnitsOnOrder=(SELECT MIN(UnitsOnOrder) FROM products);
+
+29. Carilah Berapa banyak Quantity untuk setiap Product yang terjual di order details.
+
+query :
+SELECT products.ProductName,COUNT(Quantity)
+FROM products
+INNER JOIN orderdetails
+ON products.ProductID=orderdetails.ProductID
+GROUP BY products.ProductName;
+
+30. Carilah Customer yang berasal dari kota yang berakhiran vowels (a,i,u,e,o). Hasil tidak boleh duplikasi.
+
+query : 
+SELECT CompanyName,City 
+FROM customers
+WHERE City LIKE '%a' OR City LIKE '%i' OR City LIKE '%u' OR City LIKE '%e' OR City LIKE '%o';
+
+31. carilah customer yang berasal dari negara yang awalnya bukan dari vowel (a,i,u,e,o), Hasil tidak boleh duplikasi.
+
+query : 
+SELECT CompanyName,Country 
+FROM customers
+WHERE NOT (Country LIKE 'a%' 
+OR Country LIKE 'i%' 
+OR Country LIKE 'u%' 
+OR Country LIKE 'e%' 
+OR Country LIKE 'o%')
+GROUP BY Country;
+
+32. Buatlah Query untuk mencari ContactName Customer beserta Title nya.
+
+query :
+SELECT CONCAT(ContactName,'(',SUBSTRING(ContactTitle,1,2),')')
+FROM customers;
+
+33. Buatlah Query untuk menampilkan jumlah setiap customer berdasarkan title nya.
+
+query : 
+SELECT CONCAT(COUNT(CustomerID),ContactTitle) as 'Total Customer by Title'
+FROM customers
+GROUP BY ContactTitle
+ORDER BY COUNT(CustomerID);
