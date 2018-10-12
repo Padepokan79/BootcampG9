@@ -1,0 +1,345 @@
+>> Anissa LP
+
+1. Tampilkan NIP, NAMA, KDSTAWIN, NMSTAWIN, JISTRI, JANAK, urutkan berdasarkan nama. (10 nama)
+   Jawab :
+	SELECT m.NIP, m.NAMA, m.KDSTAWIN, sk.NM_STAWIN, m.JISTRI, m.JANAK
+	FROM mstpegawai m
+	JOIN tb_stawin sk ON m.KDSTAWIN = sk.KD_STAWIN
+	ORDER BY m.NAMA ASC
+	LIMIT 10;
+   
+2. Tampilkan NAMA, KDPANGKAT, NMPANGKAT, NILAI_BAWAH, NILAI_ATAS dan tidak ada duplikat nama. (10 nama)
+   Jawab : 
+	SELECT Nama,pangkat_tbl.KDPANGKAT, NMPANGKAT, nilai_bawah , nilai_atas
+	FROM mstpegawai, gapok_tbl, pangkat_tbl
+	WHERE gapok_tbl.MASKER = mstpegawai.MASKER
+	AND pangkat_tbl.KDPANGKAT = mstpegawai.KDPANGKAT 
+	GROUP BY NAMA 
+	LIMIT 10;
+	 
+3. Tampilkan NMJABATAN, JML , dan PENSIUN yang memiliki jumlah tunjangan terbesar 
+   Jawab : 
+	SELECT NMJABATAN,JML,PENSIUN
+	FROM t_tunjangan
+	ORDER BY JML DESC
+	LIMIT 1;
+	
+4. Tampilkan NIP dan NAMA yang memiliki status "TIDAK KAWIN"
+   Jawab:
+	SELECT NIP, NAMA
+	FROM skpp_pegawai , stawin_tbl
+	WHERE stawin_tbl.kdstawin=skpp_pegawai.KDSTAWIN
+	AND nmstawin="TIDAK KAWIN"
+	ORDER BY nama; 
+	
+------------------------------------------------------------------------------------------------------------------------
+
+>> Erik S
+
+1. Tampilkan nip, nama_pegawai, gaji_bersih pegawai yang menerima gaji pada tanggal "2014-10-01"
+2. Tampilkan berapa data pegawai yang beragama islam dan jumlahkan pendapatan gaji_bersihnya
+3. Tampilkan data pegawai yang tidak mempunyai istri / suami
+4. Tampilkan jumlah anak dari pegawai yang telah pensiun
+
+>> Resi M
+
+1. Tampilkan Data pegawai yang memiliki anak 2 dan memiliki gaji terbesar
+   Jawab:
+	SELECT *
+	FROM mstpegawai
+	WHERE JANAK = '2' AND GAPOK = (	SELECT MAX(GAPOK)
+									FROM mstpegawai);
+	
+2. Tampilkan rata-rata gaji pegawai berdasarkan jabatan
+   Jawab:
+	select pt.NMPANGKAT, AVG(f.GAPOK)
+	from fgaji f, pangkat_tbl pt
+	where f.KDPANGKAT = pt.KDPANGKAT
+	group by f.KDPANGKAT;
+
+3. Tampilkan pegawai yang tidak mencantumkan alamat dan lahir tahun 1963
+   Jawab:
+	SELECT *
+	FROM mstpegawai
+	WHERE ALAMAT = '' AND TGLLHR LIKE '%1963%';
+
+4. Tampilkan  jumlah hutang seluruh pegawai berdasarkan jenis hutang (dari yang terbesar)
+   Jawab:
+	SELECT h.KDHUTANG, SUM(h.JMLHUTANG)
+	FROM hutang h, hutang_tbl ht
+	WHERE h.KDHUTANG = ht.KDHUTANG
+	GROUP BY h.KDHUTANG
+	ORDER BY SUM(h.JMLHUTANG) DESC;
+
+------------------------------------------------------------------------------------------------------------------------
+
+>> Khoirul Fatih
+
+1. Tampilkan tanggal gaji, nip, nama, nama pangkat dan gaji bersih dari tabel fgaji;
+   Jawab:
+	SELECT g.TGLGAJI, g.NIP, g.NAMA, pk.NMPANGKAT, g.bersih 
+	FROM fgaji g
+	JOIN pangkat_tbl pk ON g.KDPANGKAT=pk.KDPANGKAT;
+
+2. Tampilkan 5 nama yang memiliki gaji tunjangan istri tertinggi dari tabel fgaji.di urut dari yang tertinggi.
+   Jawab:
+	SELECT NAMA, TJISTRI
+	FROM fgaji
+	ORDER BY TJISTRI DESC
+	LIMIT 5;
+
+3. Tampilkan 1 nama yang memiliki gaji tunjangan anak terendah dari tabel fgaji.
+   Jawab:
+	SELECT NAMA, TJANAK
+	FROM fgaji
+	WHERE TJANAK =(
+		SELECT MIN(TJANAK)
+		FROM fgaji
+	);
+	
+4. Tampilkan 1 nama yang memiliki gaji potongan terendah dari tabel fgaji.
+   Jawab:
+	SELECT nama, potongan
+	FROM fgaji
+	WHERE potongan =(
+		SELECT MIN(potongan)
+		FROM fgaji
+	);
+
+------------------------------------------------------------------------------------------------------------------------
+
+>> Wawan S
+
+1. Tampilkan nip, nama, agama, yang pensiun pada tanggal 2036-08-06 atau 2013-02-27.
+
+2. Tampilkan data pegawai dan jumlah hutang yang memiliki jumlahhutang kurang dari 700000.
+   Jawab:
+	SELECT p.NIP, p.NAMA, h.JMLHUTANG
+	FROM mstpegawai p
+	JOIN hutang h ON p.NIP=h.nip
+	HAVING h.JMLHUTANG < 700000;
+
+3. buat query menampilkan semua pegawai yang lahir antara tahun 1947-06-06 sampai 1964-03-19.
+   Jawab:
+	SELECT NIP, NAMA, TGLLHR
+	FROM mstpegawai
+	WHERE TGLLHR BETWEEN '1947-06-06' AND '1964-03-19';
+
+4. Tampilkan nama,gapok,nama pangkat pegawai yang memiliki gaji terbesar
+Jawab:
+	SELECT p.NIP, p.NAMA, g.GAPOKB, pk.NMPANGKAT
+	FROM mstpegawai p
+	JOIN fgaji_detil_ukp g ON g.NIP = p.NIP
+	JOIN pangkat_tbl pk ON p.KDPANGKAT=pk.KDPANGKAT
+	WHERE p.NIP = (	SELECT NIP
+					FROM fgaji_detil_ukp
+					HAVING MAX(gapokb));
+
+>> Topan G
+
+1.  Carilah data pegawai yang beragama Islam dan pendidikannya SLTA
+	Jawab:
+		SELECT NAMA, NMAGAMA, PENDIDIKAN
+		FROM mstpegawai
+		NATURAL JOIN agama_tbl
+		WHERE PENDIDIKAN = 'SLTA' AND NMAGAMA = 'ISLAM';
+
+2.  Carilah jumlah data pegawai yang Golongan Pangkatnya dibawah 3A
+	Jawab:
+		SELECT SUM(KDPANGKAT)
+        FROM mstpegawai
+        WHERE KDPANGKAT REGEXP '^[12]';
+
+3.  Carilah pegawai yang mendapatkan tambahan gaji dari Tunjangan Umum
+	Jawab:
+		SELECT NAMA, TJUMUM
+        FROM fgaji
+        WHERE TJUMUM <> '0';
+		
+4.  Carilah jumlah pegawai yang memiliki pangkat Juru Muda
+	Jawab:
+		SELECT NAMA, NMPANGKAT
+        FROM mstpegawai
+        NATURAL JOIN pangkat_tbl
+        WHERE NMPANGKAT = 'Juru Muda';
+
+------------------------------------------------------------------------------------------------------------------------
+
+>> M Zada Widiyanto
+
+1. Tampilkan Pegawai yang memiliki gelar depan
+Jawab:
+	SELECT *
+	FROM mstpegawai
+	WHERE NOT GLRDEPAN = '';
+
+2. Tampilkan Pegawai yang menjadi Kepala Sekolah SD GOL.IV
+Jawab:
+	SELECT *
+	FROM mstpegawai
+	WHERE KDGURU = (	SELECT KDGURU
+						FROM guru_tbl
+						WHERE NMGURU = 'KEPALA SEKOLAH SD GOL.IV');
+
+3. Tampilkan Pegawai yang menjabat menjadi Gubernur
+Jawab:
+	SELECT *
+	FROM mstpegawai
+	WHERE KDPANGKAT = (	SELECT KDPANGKAT
+						FROM pangkat_tbl
+						WHERE NMPANGKAT = 'GUBERNUR');
+
+4. Tampilkan Pegawai dengan gaji pokok tertinggi
+Jawab:
+	SELECT *
+	FROM mstpegawai
+	WHERE GAPOK = (	SELECT MAX(GAPOK)
+					FROM mstpegawai);
+	
+------------------------------------------------------------------------------------------------------------------------
+
+>> Sahdan HM
+
+_____________________________________________________________________________________________
+Soal 1:
+Cari data pegawai yang memiliki gaji pokok diatas rata-rata, tunjangan fungsi diatas 700.000 dan tidak memiliki tunjangan anak.
+_____________________________________________________________________________________________
+Soal 2:
+Tampilkan nama pegawai, total hutang, sisa hutang dan sisa cicilan yang memiliki jumlah hutang <= 500.000, dengan pendidikan Sarjana dan baru mencicil sebanyak 10 kali.
+_____________________________________________________________________________________________
+Soal 3:
+Tampilkan nama pegawai, nama keluarga, jumlah anak, status perkawinan, tanggal lahir dengan daerah Golongan I, dengan Eselon 1A dan beragama Kristen (untuk kondisi menggunakan kata kunci HAVING (bukan WHERE)).
+_____________________________________________________________________________________________
+Soal 4:
+Tampilkan data gaji yang untuk tanggal 01 Maret 2014 sampai 30 Juni 2014 dimana pegawainya belum menikah, huruf pertama dari namanya tidak dimulai oleh huruf vokal dan memiliki pangkat Penata Muda.
+_____________________________________________________________________________________________
+
+>> Fauzi A
+
+1.tampilkan NIP,hubungan keluarga, dan namanya dari yang hubungan keluargnya adalah anak tiri
+  Jawab:
+	SELECT k.NIP, hk.nmhubkel, k.NMKEL 
+	FROM keluarga k 
+	JOIN hubkel_tbl hk ON k.KDHUBKEL = hk.KDHUBKEL 
+	WHERE hk.nmhubkel LIKE '%ANAK TIRI%';
+
+2.tampilkan NMKEL,NMHUTANG yang memiliki hutang 'hutang kelebihan gaji' dan memiliki hutang di atas rata2 jmlhutang menggunakan HAVING
+  Jawab:
+	select k.NMKEL, ht.NMHUTANG, h.JMLHUTANG 
+	from keluarga k 
+	join hutang h on k.NIP = h.NIP 
+	join hutang_tbl ht on ht.KDHUTANG = h.KDHUTANG 
+	where ht.NMHUTANG = 'HUTANG KELEBIHAN BAYAR GAJI' 
+	GROUP BY k.NIP  
+	having h.JMLHUTANG > avg(h.JMLHUTANG);
+
+3.tampilkan semua field yang ada di jabatankhusus_tbl yang pensiunnya paling rendah
+  Jawab:
+	SELECT * 
+	FROM jabatankhusus_tbl 
+	WHERE PENSIUN = (	SELECT MIN(PENSIUN) 
+						FROM jabatankhusus_tbl);
+	
+4.tampilkan semua field yang ada di jabatankhusus_tbl yang JMLnya paling tinggi
+  Jawab:
+	SELECT * 
+	FROM jabatankhusus_tbl 
+	WHERE JML = (	SELECT MAX(JML) 
+					FROM jabatankhusus_tbl);
+
+>> Nispi AA
+
+1. Tampilkan Pegawai dan nama pangkat pegawai tsb. yang berstatus Janda/Duda
+   Jawab:
+	SELECT p.NAMA, pk.NMPANGKAT
+	FROM pangkat_tbl pk
+	JOIN mstpegawai p ON p.kdpangkat = pk.kdpangkat
+	JOIN stawin_tbl s ON s.kdstawin = p.kdstawin 
+	WHERE s.NMSTAWIN = 'JANDA/DUDA'
+
+2. Tampilkan pegawai yang bergilar M.si
+   Jawab:
+	SELECT *
+	FROM mstpegawai_01
+	WHERE GLRBELAKANG = 'M.si';
+   
+3. Tampilkan jumlah cicilan hutang yang berpangkat Pengatur Muda
+   Jawab:
+	SELECT h.JMLCICILAN
+	FROM hutang h
+	JOIN mstpegawai p ON h.NIP = p.NIP
+	JOIN pangkat_tbl pt ON pt.KDPANGKAT = p.KDPANGKAT
+	WHERE pt.NMPANGKAT = 'Pengatur Muda';
+
+4. Tampilkan pegawai yang bertatus janda dan mempunyai anak
+   Jawab:
+	SELECT mp.NAMA
+	FROM mstpegawai mp
+	JOIN tb_stawin st ON st.KD_STAWIN = mp.KDSTAWIN
+	WHERE st.NM_STAWIN = 'JANDA' AND mp.JANAK <> '0';
+
+------------------------------------------------------------------------------------------------------------------------
+
+>> Roihatul J
+
+1. Tampilkan berapa banyak pegawai berdasarkan pendidikannya
+   Jawab:
+	SELECT PENDIDIKAN, COUNT(PENDIDIKAN) AS JUMPEGAWAI
+	FROM mstpegawai
+	GROUP BY PENDIDIKAN;
+   
+2. Tampilkan nama dan pendidikan pegawai yang memiliki pangkat Pembina Utama Muda
+   Jawab:
+	SELECT NAMA, PENDIDIKAN
+	FROM mstpegawai
+	WHERE KDPANGKAT = (
+		SELECT KDPANGKAT
+		FROM pangkat_tbl
+		WHERE NMPANGKAT = 'Pembina Utama Muda'
+	);
+
+3. Tampilkan nama pegawai, nama pangkat, gaji pokok, gaji kotor dan gaji bersih yang tanggal penggajiannya 1 Januari 2017
+   Jawab:
+	SELECT g.NAMA, p.NMPANGKAT, g.GAPOK, g.KOTOR, g.BERSIH
+	FROM fgaji g
+	JOIN pangkat_tbl p ON p.KDPANGKAT = g.KDPANGKAT
+	WHERE g.TGLGAJI = '2017-01-01';
+
+4. Tampilkan nama pegawai beserta nama status kawin yang status kawinnya janda/duda beranak 1
+   Jawab:
+	SELECT mp.NAMA, st.NM_STAWIN, mp.JANAK
+	FROM mstpegawai mp
+	INNER JOIN tb_stawin st ON st.KD_STAWIN = mp.KDSTAWIN
+	WHERE mp.JANAK = '1' AND (st.NM_STAWIN = 'JANDA' OR st.NM_STAWIN = 'DUDA');
+
+>> Faisal S
+
+1. Tampilkan data dari KDAKUN, NMAKUN, idakun, urt !
+   Jawab:
+	SELECT ak.KDAKUN, ak.NMAKUN, ak.idakun, akk.urt
+	FROM akun_tbl ak, akun_konv akk
+	WHERE ak.KDTRANS = akk.kdtrans;
+
+2. Tampilkan NIP, NAMA, KDPANGKAT, GAPOK, JANAK, JISTRI dari NAMA yang mempunyai
+   kata 'FAISAL' di dalamnya, yang belum mempunyai anak dan istri. (tidak boleh
+   ada redudansi data !)
+   Jawab:
+	SELECT nip, nama, kdpangkat, gapok, janak, jistri
+	FROM mstpegawai
+	WHERE nama LIKE '%Faisal%' AND janak = '0' AND jistri = '0';
+
+3. Tampilkan NIP beserta Jumlah Cicilan yang sudah dibayarkan Tertinggi !
+   Jawab:
+	SELECT NIP, JMLCICILAN
+	FROM hutang
+	ORDER BY JMLCICILAN DESC
+	LIMIT 1;
+
+4. Tampilkan NIP, NMKEL, TGLLHR dari semua keluarga dengan kepala keluarganya 
+   (KDHUBKEL = 00)bergelar dokter (dr). !
+   Jawab:
+	SELECT NIP, NMKEL, TGLLHR
+	FROM keluarga
+	WHERE KDHUBKEL = '00' AND NMKEL LIKE 'dr.%';
+
+------------------------------------------------------------------------------------------------------------------------
