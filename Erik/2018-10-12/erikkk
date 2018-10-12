@@ -1,0 +1,194 @@
+1. erik
+Tampilkan nip, nama_pegawai, gaji_bersih pegawai yang menerima gaji pada tanggal "2014-10-01"
+jawab :
+SELECT NIP, NAMA, (GAPOK+TJISTRI+TJANAK+TJFUNGSI+
+TJBERAS+TJPAJAK+TJUMUM-PPAJAK-PTAPERUM) 
+AS GAJIH_BERSIH FROM fgaji
+WHERE TGLGAJI = '2014-10-01'
+LIMIT 100
+
+2. zada
+Tampilkan Pegawai yang memiliki gelar depan
+jawab :
+SELECT NIP, NAMA FROM fgaji 
+WHERE GLRBELAKANG != NULL
+
+3. topan
+Carilah data pegawai yang beragama Islam dan pendidikannya SLTA
+jawab :
+SELECT * FROM mstpegawai 
+WHERE  AGAMA =(SELECT  KDAGAMA FROM agama_tbl
+WHERE NMAGAMA = 'ISLAM')  AND PENDIDIKAN = 'SLTA'
+
+4. topan
+Carilah pegawai yang mendapatkan tambahan gaji dari Tunjangan Umum
+jawab :
+SELECT NIP,NAMA,TJUMUM FROM fgaji
+WHERE  TJUMUM > '0' 
+
+5. wawan
+Tampilkan nama,gapok,nama pangkat pegawai yang memiliki gaji terbesar
+jawab :
+SELECT mstpegawai.NAMA,MAX(mstpegawai. GAPOK), pangkat_tbl.NMPANGKAT
+FROM mstpegawai INNER JOIN pangkat_tbl ON mstpegawai.KDPANGKAT 
+= pangkat_tbl.KDPANGKAT WHERE mstpegawai.NIP 
+
+6. erik
+Tampilkan data pegawai yang tidak mempunyai istri / suami
+jawab :
+SELECT * FROM mstpegawai 
+WHERE JISTRI < 1
+
+7. erik
+Tampilkan jumlah anak dari pegawai yang telah pensiun
+jawab :
+SELECT SUM(JANAK) FROM mstpegawai 
+WHERE NIP IN(SELECT nip FROM automut
+WHERE TGLPENSIUN < CURDATE())
+
+8. wawan
+Tampilkan nip, nama, agama, yang pensiun pada tanggal 2036-08-06 atau 2013-02-27
+jawab :
+SELECT *FROM mstpegawai 
+WHERE TGLLHR > '1947-06-06'  AND TGLLHR  < '1964-03-19'
+
+9. wawan 
+Tampilkan DATA pegawai dan jumlah hutang yang memiliki jumlahhutang kurang dari 700000
+jawab :
+SELECT mstpegawai.*,hutang.JMLHUTANG 
+FROM mstpegawai INNER JOIN hutang
+ON mstpegawai.NIP=hutang.NIP  
+WHERE hutang.JMLHUTANG < 700000
+
+10. Nispi
+Tampilkan pegawai yang bergilar M.si
+jawab :
+SELECT * FROM mstpegawai 
+WHERE NAMA LIKE '%M.si' 
+
+11. zada
+Tampilkan Pegawai dengan gaji pokok tertinggi
+jawab :
+SELECT * ,MAX(GAPOK)FROM mstpegawai 
+
+12. topan
+Carilah jumlah DATA pegawai yang Golongan Pangkatnya dibawah 3A
+jawab :
+SELECT * FROM mstpegawai 
+WHERE KDPANGKAT <='4' 
+
+13. nispi
+Tampilkan Pegawai dan nama pangkat pegawai tsb. yang berstatus Janda/Duda
+jawab : 
+SELECT NAMA,KDPANGKAT FROM mstpegawai
+WHERE KDSTAWIN = (SELECT kdstawin FROM stawin_tbl
+WHERE nmstawin = 'JANDA/DUDA') LIMIT 100
+
+14. fatih
+Tampilkan tanggal gaji, nip, nama, nama pangkat dan gaji bersih dari tabel fgaji
+jawab : 
+SELECT fgaji.TGLGAJI, fgaji.NIP, fgaji.NAMA, fgaji.BERSIH,pangkat_tbl.NMPANGKAT
+FROM fgaji,pangkat_tbl WHERE fgaji.KDPANGKAT = pangkat_tbl.KDPANGKAT
+
+15. fatih
+Tampilkan 1 nama yang memiliki gaji potongan terendah dari tabel fgaji.
+jawab :
+SELECT NAMA,MAX(POTONGAN) FROM fgaji
+
+16. fatih
+Tampilkan 5 nama yang memiliki gaji tunjangan istri tertinggi dari tabel fgaji.di urut dari yang tertinggi.
+jawab :
+SELECT NAMA , TJISTRI FROM fgaji 
+ORDER BY  TJISTRI DESC
+LIMIT 5
+
+17. fatih
+Tampilkan 1 nama yang memiliki gaji tunjangan anak terendah dari tabel fgaji.
+jawab :
+SELECT NAMA , MIN(TJANAK) FROM fgaji 
+
+18. zada
+Tampilkan Pegawai dengan gaji pokok tertinggi
+jawab :
+SELECT NAMA , MAX(GAPOK) FROM fgaji 
+
+19. annisa
+Tampilkan NIP, NAMA, KDSTAWIN, NMSTAWIN, JISTRI, JANAK, urutkan berdasarkan nama. (10 nama)
+Jawab :
+SELECT mstpegawai.NIP,mstpegawai.NAMA,mstpegawai.KDSTAWIN,
+stawin_tbl.nmstawin,mstpegawai.JISTRI,mstpegawai.JANAK 
+FROM mstpegawai INNER JOIN stawin_tbl  
+ON mstpegawai.KDSTAWIN = stawin_tbl.kdstawin 
+ORDER BY NAMA LIMIT 10
+
+20. annisa
+ampilkan NIP dan NAMA yang memiliki STATUS "SENDIRI"
+jawab :
+SELECT NIP, NAMA FROM mstpegawai 
+WHERE KDSTAWIN IN(SELECT kdstawin FROM stawin_tbl
+WHERE nmstawin !='KAWIN')
+
+21. roi
+Tampilkan berapa banyak pegawai berdasarkan pendidikannya
+jawab :
+SELECT  PENDIDIKAN, COUNT(*)AS JUMLAH  FROM mstpegawai 
+GROUP BY PENDIDIKAN
+
+22. roi
+Tampilkan nama pegawai beserta nama STATUS kawin yang STATUS kawinnya janda/duda beranak 1
+jawab :
+SELECT mstpegawai.NAMA, stawin_tbl.nmstawin FROM mstpegawai
+INNER JOIN stawin_tbl WHERE mstpegawai.KDSTAWIN = stawin_tbl.kdstawin
+AND stawin_tbl.`nmstawin` = 'JANDA/DUDA' AND mstpegawai.JANAK = '1'
+
+23. resi
+Tampilkan DATA pegawai yang memiliki anak 2 dan memiliki gaji terbesar
+jawab :
+SELECT * , MAX(GAPOK) AS GAJI FROM mstpegawai 
+WHERE JANAK = '2'
+
+24. resi
+Tampilkan rata-rata gaji pegawai berdasarkan jabatan
+jawab :
+SELECT pangkat_tbl.NMPANGKAT,AVG(mstpegawai.GAPOK) FROM pangkat_tbl 
+INNER JOIN mstpegawai ON pangkat_tbl.`KDPANGKAT` = mstpegawai.`KDPANGKAT`
+GROUP BY pangkat_tbl.NMPANGKAT
+
+25. resi
+Tampilkan pegawai yang tidak mencantumkan alamat dan lahir tahun 1963
+jawab :
+SELECT *FROM mstpegawai 
+WHERE ALAMAT = '' AND TGLLHR LIKE '%1963%'
+
+26. resi
+Tampilkan  jumlah hutang seluruh pegawai berdasarkan jenis hutang (dari yang terbesar)
+jawab :
+SELECT hutang.JMLHUTANG, hutang_tbl.NMHUTANG 
+FROM hutang,hutang_tbl GROUP BY(hutang_tbl.NMHUTANG)
+ORDER BY hutang_tbl.NMHUTANG
+
+27. wawan
+Tampilkan nip, nama, agama, yang pensiun pada tanggal 2036-08-06 atau 2013-02-27.
+jawab :
+SELECT NIP,NAMA FROM mstpegawai 
+WHERE NIP IN(SELECT nip FROM automut
+WHERE TGLPENSIUN = '2036-08-06' OR TGLPENSIUN = '2013-02-27')
+
+28. nispi
+Tampilkan pegawai yang bertatus janda dan mempunyai anak
+jawab : 
+SELECT *FROM mstpegawai 
+WHERE  KDSTAWIN IN
+(SELECT kdstawin FROM stawin_tbl 
+WHERE nmstawin = 'JANDA/DUDA')
+AND JANAK > 0
+
+29. erik
+Tampilkan berapa DATA pegawai yang beragama islam dan jumlahkan pendapatan gaji_bersihnya
+jawab :
+SELECT agama_tbl.NMAGAMA,COUNT(mstpegawai.AGAMA), 
+SUM(fgaji.BERSIH) FROM agama_tbl, mstpegawai, fgaji
+WHERE agama_tbl.`KDAGAMA`=mstpegawai.`AGAMA`  AND 
+mstpegawai.`NIP`= fgaji.`NIP` GROUP BY AGAMA
+
+30. 

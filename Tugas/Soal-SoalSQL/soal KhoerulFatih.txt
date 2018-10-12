@@ -1,4 +1,4 @@
 1. Tampilkan tanggal gaji, nip, nama, nama pangkat dan gaji bersih dari tabel fgaji;
 2. Tampilkan 5 nama yang memiliki gaji tunjangan istri tertinggi dari tabel fgaji.di urut dari yang tertinggi.
-3. Tampilkan 1 nama yang memiliki gaji tunjangan anak terendah dari tabel fgaji.
+3. Tampilkan 1 nama yang memiliki anak 1 dan gaji tunjangan anak terendah dari tabel fgaji.
 4. Tampilkan 1 nama yang memiliki gaji potongan terendah dari tabel fgaji.
